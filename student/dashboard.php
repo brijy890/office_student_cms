@@ -3,8 +3,8 @@
 
 <?php 
 
-if (isset($_SESSION['student_username'])) {
-	$username = $_SESSION['student_username'];
+if (isset($_SESSION['student_id'])) {
+	$s_id = $_SESSION['student_id'];
 }
 
 ?> 
@@ -33,7 +33,7 @@ if (isset($_SESSION['student_username'])) {
 		<ul class="nav navbar-nav pull-right">
 
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="./admin/login_form.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $username; ?></a>
+					<a class="nav-link dropdown-toggle" href="./admin/login_form.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $s_id; ?></a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="./logout.php">Logout</a>
 					</div>
@@ -42,33 +42,6 @@ if (isset($_SESSION['student_username'])) {
 	</div>
 </nav>
 
-
-		<?php
-
-		$per_page = 3;
-
-		if (isset($_GET['page'])) {
-
-		$page = $_GET['page'];
-
-		} else {
-
-		$page = "";
-		}
-
-		if ($page == "" || $page == 1) {
-		$page_1 = 0;
-		} else {
-		$page_1 = ($page * $per_page) - $per_page;
-		}
-
-		$student_count_query = "SELECT * FROM student_users";
-		$student_query = mysqli_query($connection, $student_count_query);
-		$count = mysqli_num_rows($student_query);
-
-		$count = ceil($count / $per_page);
-
-		?>
 
 <div class="container">
   <h2 class="text-center">Students Records</h2>      
@@ -111,21 +84,6 @@ if (isset($_SESSION['student_username'])) {
     </tbody>
   </table>
 </div>
-
-<ul class="pager">
-
-            <?php
-
-            for ($i=1; $i <=$count ; $i++) {
-
-                if ($i == $page) {
-                     echo "<li><a class='active_link' href='dashboard.php?page={$i}'>{$i}</a></li>";
-                 } else{
-                     echo "<li><a href='dashboard.php?page={$i}'>{$i}</a></li>";
-                 }  
-            }
-            ?>
-        </ul>
 
 </body>
 </html>

@@ -34,7 +34,7 @@ if(isset($_POST['login'])){
 		redirect("./dashboard.php");
 		// header("Location:". 'dashboard.php');
 	} else {
-		redirect("index.php");
+		redirect("../index.php");
 		// header("Location:". 'index.php');
 		
 	}

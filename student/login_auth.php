@@ -33,7 +33,7 @@ if(isset($_POST['login'])){
 		$_SESSION['student_username'] 	= $db_username;
 		$_SESSION['password'] 	= $db_password;
 
-		redirect("dashboard.php?student_id= {$db_id};&sudent_user={db_username}");
+		redirect("dashboard.php?student_id= {$db_id}");
 		// header("Location:". 'dashboard.php');
 	} else {
 		redirect("../index.php");

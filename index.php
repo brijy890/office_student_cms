@@ -1,4 +1,5 @@
 <?php session_start(); ?>
+<?php include './inc/db.php';?>
 <?php include './inc/header.php';?>
 
 
@@ -17,9 +18,9 @@
 			echo "<ul class='nav navbar-nav pull-right'>
 					<li><a href='./admin/dashboard.php'>{$_SESSION['username']}</a></li>
 				</ul>";
-		} else if(isset($_SESSION['student_username'])){
+		} else if(isset($_SESSION['student_id'])){
 			echo "<ul class='nav navbar-nav pull-right'>
-					<li><a href='./student/dashboard.php'>{$_SESSION['student_username']}</a></li>
+					<li><a href='./student/dashboard.php'>{$_SESSION['student_id']}</a></li>
 				</ul>";
 		} 
 
@@ -50,7 +51,7 @@
 
 				<?php
 
-				if (isset($_SESSION['student_username'])) {
+				if (isset($_SESSION['student_id'])) {
 					echo "<a class='btn btn-info btn-lg' href='./student/dashboard.php' role='button'>Register</a>";
 				} else{
 					echo "<a class='btn btn-info btn-lg' href='./student/register_form.php' role='button'>Register</a>";
@@ -65,7 +66,7 @@
 
 				<?php
 
-				if (isset($_SESSION['student_username'])) {
+				if (isset($_SESSION['student_id'])) {
 					echo "<a class='btn btn-info btn-lg' href='./student/dashboard.php' role='button'>Login</a>";
 				} else{
 					echo "<a class='btn btn-info btn-lg' href='./student/login_form.php' role='button'>Login</a>";
