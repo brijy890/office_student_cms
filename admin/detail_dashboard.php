@@ -47,7 +47,7 @@ if (isset($_SESSION['username'])) {
 
 <div class="container">
   <h2 class="text-center">Students Records</h2>      
-  <table class="table table-striped">
+  <table class="table table-striped table-bordered">
     <thead>
       <tr class="table-primary">
       	<th>Student ID</th>

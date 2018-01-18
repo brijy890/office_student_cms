@@ -72,7 +72,7 @@ if (isset($_SESSION['student_username'])) {
 
 <div class="container">
   <h2 class="text-center">Students Records</h2>      
-  <table class="table table-striped">
+  <table class="table table-striped table-bordered">
     <thead>
       <tr>
       	<th>Student ID</th>

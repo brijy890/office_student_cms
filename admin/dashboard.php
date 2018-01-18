@@ -47,7 +47,7 @@ if (isset($_SESSION['username'])) {
 
 		<?php
 
-		$per_page = 5;
+		$per_page = 2;
 
 		if (isset($_GET['page'])) {
 
@@ -76,7 +76,7 @@ if (isset($_SESSION['username'])) {
 
 <div class="container">
   <h2 class="text-center">Students Records</h2>      
-  <table class="table table-striped">
+  <table class="table table-striped table-bordered">
     <thead>
       <tr>
       	<th>Student ID</th>
