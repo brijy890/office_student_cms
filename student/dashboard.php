@@ -3,8 +3,8 @@
 
 <?php 
 
-if (isset($_SESSION['student_id'])) {
-	$s_id = $_SESSION['student_id'];
+if (isset($_SESSION['student_username'])) {
+	$student_username = $_SESSION['student_username'];
 }
 
 ?> 
@@ -33,7 +33,7 @@ if (isset($_SESSION['student_id'])) {
 		<ul class="nav navbar-nav pull-right">
 
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="./admin/login_form.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $s_id; ?></a>
+					<a class="nav-link dropdown-toggle" href="./admin/login_form.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-book"></span> <?php echo $student_username; ?></a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="./logout.php">Logout</a>
 					</div>
@@ -45,14 +45,6 @@ if (isset($_SESSION['student_id'])) {
 
 <div class="container">
   <h2 class="text-center">Students Records</h2>      
-  <table class="table table-striped table-bordered">
-    <thead>
-      <tr>
-      	<th>Student ID</th>
-        <th>Username</th>
-      </tr>
-    </thead>
-    <tbody>
 
 		<?php
 		// global $connection;
@@ -66,6 +58,23 @@ if (isset($_SESSION['student_id'])) {
 		die("QUERY FAILED ".mysqli_error($connection));
 		} 
 
+		if ((mysqli_num_rows($select_user) < 1)) {
+			echo "<h1>No records to show</h1>";
+		} else{
+
+		?>
+		
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Student ID</th>
+					<th>Username</th>
+				</tr>
+			</thead>
+		<tbody>
+
+
+    	<?php
 		while ($row = mysqli_fetch_assoc($select_user)) {
 		$student_id 			= $row['id'];
 		$student_username 		= $row['username'];
@@ -77,9 +86,13 @@ if (isset($_SESSION['student_id'])) {
 		echo '<tr>';
 		echo "<td>{$student_id}</td>";
 		echo "<td>{$student_username}</td>";
-		 echo "<td><a href='./dashboard-2.php?s_id=$student_id' class='btn btn-primary btn-block'>View</a></td>";
+		echo "<td><a href='./dashboard-2.php?s_id=$student_id' class='btn btn-primary btn-block'>View</a></td>";
 
 	}
+			
+		}
+
+		
   ?>
     </tbody>
   </table>

@@ -5,8 +5,7 @@
 <?php 
 
 if(isset($_POST['submit'])){
-	global $connection;
-
+	
 	$username			= $_POST['username'];
 	$first_name			= $_POST['first_name'];
 	$last_name			= $_POST['last_name'];
@@ -26,15 +25,11 @@ if(isset($_POST['submit'])){
 
 	$count = mysqli_num_rows($select_query);
 
-	echo $count;
-
 	if ($count > 0) {
-		redirect('register_form.php');
-		$_SESSION['error'] = 'Username already exits';
-	}
-
-	if($password != $confirm_password){
-		echo 'password and confirm password should be same';
+		redirect('login_form.php');
+	} else{
+			if($password != $confirm_password){
+			echo 'password and confirm password should be same';
 	} else {
 			$password = md5($_POST['password']);
 			// $password = md5($password);
@@ -49,7 +44,7 @@ if(isset($_POST['submit'])){
 			header("Location:". '../index.php');
 			}
 	}
-	
+	}
 
 }
 

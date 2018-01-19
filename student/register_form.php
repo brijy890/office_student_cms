@@ -1,5 +1,7 @@
 <?php session_start(); ?>
-<?php include './inc/db.php';?>
+<?php include '../inc/db.php';?>
+<?php include '../inc/function.php';?>
+<?php checkConnection();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

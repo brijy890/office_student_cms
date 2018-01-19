@@ -33,7 +33,7 @@ if (isset($_SESSION['student_username'])) {
 		<ul class="nav navbar-nav pull-right">
 
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="./admin/login_form.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $username; ?></a>
+					<a class="nav-link dropdown-toggle" href="./admin/login_form.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-book"></span> <?php echo $username; ?></a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="./logout.php">Logout</a>
 					</div>
@@ -47,12 +47,8 @@ if (isset($_SESSION['student_username'])) {
   <table class="table table-striped table-bordered">
     <thead>
       <tr class="table-primary">
-      	<th>Student ID</th>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-        <th>Mobile Number</th>
-        <th>Address</th>
+      	<th>Field</th>
+      	<th>Values</th>
       </tr>
     </thead>
     <tbody>
@@ -72,24 +68,41 @@ if (isset($_SESSION['student_username'])) {
 		} 
 
 		while ($row = mysqli_fetch_assoc($select_user)) {
-		$student_id = $row['id'];
-		$student_email = $row['email'];
+		$student_id 		= $row['id'];
+		$student_username	= $row['username'];
+		$student_email 		= $row['email'];
 		$student_first_name =$row['first_name'];
-		$student_last_name = $row['last_name'];
-		$student_mobile = $row['mobile'];
-		$student_address = $row['address'];
+		$student_last_name 	= $row['last_name'];
+		$student_mobile 	= $row['mobile'];
+		$student_address 	= $row['address'];
 		echo '<tr>';
-		echo "<td>{$student_id}</td>";
-		echo "<td>{$student_first_name}</td>";
-		echo "<td>{$student_last_name}</td>";
-		echo "<td>{$student_email}</td>";
-		echo "<td>{$student_mobile}</td>";
-		echo "<td>{$student_address}</td>";
+		echo "<td>Student Id</td><td>{$student_id}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Username</td><td>{$student_username}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Firstname</td><td>{$student_first_name}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Lastname</td><td>{$student_last_name}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Email</td><td>{$student_email}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Mobile Number</td><td>{$student_mobile}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Address</td><td>{$student_address}</td>";
+		echo "</tr>";
 
 	}
   ?>
     </tbody>
   </table>
+  <a href="dashboard.php?student_id=<?php echo $_SESSION['student_id']; ?>" class="btn btn-info">Back</a>
+  <a href="edit.php?student_id=<?php echo $_SESSION['student_id']?>" class="btn btn-primary">Edit</a>
 </div>
 
 </body>
