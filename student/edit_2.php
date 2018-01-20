@@ -3,6 +3,7 @@
 <?php include '../inc/db.php';?>
 <?php include '../inc/function.php';?>
 <?php checkConnection();?>
+
 <?php 
 
 if (isset($_SESSION['student_id'])) {
