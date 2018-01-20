@@ -13,7 +13,7 @@ function confirmedQuery($query){
 
 	global $connection;
 	if(!$query){
-		die("Query Failed" . mysqli_error($connection, $query));
+		die(mysqli_error($connection, $query));
 	}
 }
 
@@ -25,10 +25,11 @@ function studentResgister($username, $first_name, $last_name, $email, $mobile, $
 	// $password = md5($password);
 	// $password   = password_hash($password, PASSWORD_BCRYPT , array('cost' => 12));
 	$query = "INSERT INTO student_users (username, first_name, last_name, email, address, password, mobile) VALUES ('{$username}', '{$first_name}', '{$last_name}', '{$email}', '{$address}', '{$password}', '{$mobile}')";
+
 	$register_user_query = mysqli_query($connection, $query);
 
 	if (!$register_user_query) {
-	confirmedQuery($register_user_query);
+		confirmedQuery($register_user_query);
 	} else {
 	header("Location:". '../student/login_form.php');
 	}
@@ -62,6 +63,43 @@ function studentLogin($username, $password){
 
 	}
 }
+
+
+// admin registration
+function adminRegister($username, $password, $role){
+
+	global $connection;
+	$query		= "INSERT INTO admin (username, password, role) VALUES ('{$username}', '{$password}', '{$role}')";
+	$register_admin_query = mysqli_query($connection, $query);
+
+	confirmedQuery($register_admin_query);
+
+	redirect('../');
+}
+
+
+//admin exits
+function admin_exits($username){
+
+	global $connection;
+	$query = "SELECT * FROM admin WHERE username = '{$username}' ";
+	$select_query = mysqli_query($connection, $query);
+
+	if (!$select_query) {
+		confirmedQuery($select_query);
+	}
+
+	$count = mysqli_num_rows($select_query);
+
+	if ($count > 0) {
+		return true;
+	} else{
+		return false;
+	}
+
+}
+
+
 
 function checkConnection(){
 	global $connection;

@@ -40,7 +40,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="jumbotron text-center">
-				<h1 class="display-4">Welcome Student</h1>
+				<h1 class="display-6">Welcome Student</h1>
 				<p class="lead">This is Student CMS system</p>
 				<hr class="my-4">
 				<p></p>

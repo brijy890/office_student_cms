@@ -73,19 +73,20 @@ if (isset($_SESSION['username'])) {
 		?>
 
 <div class="container">
-  <h2 class="text-center">Students Records</h2>      
+  <h2 class="text-center">User Records</h2>      
   <table class="table table-striped table-bordered">
     <thead>
       <tr>
-      	<th>Student ID</th>
+      	<th>User ID</th>
         <th>Username</th>
+        <th>User Role</th>
       </tr>
     </thead>
     <tbody>
 
 		<?php
-		global $connection;
-		$query = "SELECT * FROM student_users LIMIT $page_1, $per_page";
+		
+		$query = "SELECT * FROM admin LIMIT $page_1, $per_page";
 		$select_user = mysqli_query($connection, $query);
 
 		if (!$select_user) {
@@ -93,24 +94,62 @@ if (isset($_SESSION['username'])) {
 		} 
 
 		while ($row = mysqli_fetch_assoc($select_user)) {
-		$student_id = $row['id'];
-		$student_username = $row['username'];
-		$student_email = $row['email'];
-		$student_first_name =$row['first_name'];
-		$student_last_name = $row['last_name'];
-		$student_mobile = $row['mobile'];
-		$student_address = $row['address'];
+		$user_id = $row['id'];
+		$user_username	=	$row['username'];
+		$user_role	=	$row['role'];
 		echo '<tr>';
-		echo "<td>{$student_id}</td>";
-		echo "<td>{$student_username}</td>";
-		 echo "<td><a href='./detail_dashboard.php?s_id=$student_id' class='btn btn-primary btn-block'>View</a></td>";
+		echo "<td>{$user_id}</td>";
+		echo "<td>{$user_username}</td>";
+		if ($user_role === 'student') {
+			echo "<td><a href='./users_records.php?change_to_admin={$user_id}'>{$user_role}<a/></td>";
+		}
+		else{
+			echo "<td><a href='./users_records.php?change_to_student={$user_id}'>{$user_role}<a/></td>";
+		}
 
 	}
   ?>
     </tbody>
   </table>
-  <a href="./users_records.php" class="btn btn-default">View Users</a>
+  <a href="./dashboard.php" class="btn btn-default">Back</a>
 </div>
+
+
+<?php
+
+if (isset($_GET['change_to_admin'])) {
+	$id = $_GET['change_to_admin'];
+
+	$query = "UPDATE admin SET role = 'admin' WHERE id = '{$id}' ";
+
+    $change_to_sub_id_query = mysqli_query($connection, $query);
+
+    if(!$change_to_sub_id_query){
+        die("query failed".mysqli_error($connection));
+        
+    }else{
+    	header("Location: users_records.php");
+    }
+}
+
+if (isset($_GET['change_to_student'])) {
+	$id = $_GET['change_to_student'];
+
+	$query = "UPDATE admin SET role = 'student' WHERE id = '{$id}' ";
+
+    $change_to_sub_id_query = mysqli_query($connection, $query);
+
+    if(!$change_to_sub_id_query){
+        die("query failed".mysqli_error($connection));
+    } else{
+    	header("Location: users_records.php");
+    }
+}
+
+
+
+
+?>
 
 <ul class="pager">
 
