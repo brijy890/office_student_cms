@@ -6,14 +6,45 @@
 
 if(isset($_POST['submit'])){
 	
-	$username			= $_POST['username'];
-	$first_name			= $_POST['first_name'];
-	$last_name			= $_POST['last_name'];
-	$email 				= $_POST['email'];
-	$mobile 			= $_POST['mobile'];
-	$address			= $_POST['address'];
-	$password 			= $_POST['password'];
-	$confirm_password 	= $_POST['password_confirmation'];
+	$username			= trim($_POST['username']);
+	$first_name			= trim($_POST['first_name']);
+	$last_name			= trim($_POST['last_name']);
+	$email 				= trim($_POST['email']);
+	$mobile 			= trim($_POST['mobile']);
+	$address			= trim($_POST['address']);
+	$password 			= trim($_POST['password']);
+	$confirm_password 	= trim($_POST['password_confirmation']);
+
+
+	$error = [
+		'username' 			=	'';
+		'first_name'		=	'';
+		'last_name'			=	'';
+		'email'				=	'';
+		'mobile'			=	'';
+		'address'			=	'';
+		'password'			=	'';
+		'confirm_password'	=	''; 
+	];
+
+	if ($username == '') {
+		$error['username']	=	'username cannot be empty';
+	}
+
+	if (strlen($username) < 5) {
+		$error['username']	=	'username should have more then 5 charachter';
+	}
+
+	exit;
+
+
+
+
+
+
+
+
+
 
 
 	$query = "SELECT * FROM student_users WHERE username = '{$username}' ";

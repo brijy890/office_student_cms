@@ -14,6 +14,7 @@
 <body>
 	
 	<div class="container">
+
         <div class="row centered-form">
         <div class="col-xs-12 col-sm-8 col-md-12 col-sm-offset-2">
         	<div class="panel panel-default">

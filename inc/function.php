@@ -18,6 +18,21 @@ function confirmedQuery($query){
 }
 
 
+//student registration
+function studentResgister($username, $first_name, $last_name, $email, $mobile, $address, $password){
+
+	global $connection;
+	// $password = md5($password);
+	// $password   = password_hash($password, PASSWORD_BCRYPT , array('cost' => 12));
+	$query = "INSERT INTO student_users (username, first_name, last_name, email, address, password, mobile) VALUES ('{$username}', '{$first_name}', '{$last_name}', '{$email}', '{$address}', '{$password}', '{$mobile}')";
+	$register_user_query = mysqli_query($connection, $query);
+
+	if (!$register_user_query) {
+	confirmedQuery($register_user_query);
+	} else {
+	header("Location:". '../student/login_form.php');
+	}
+}
 
 // student login function
 function studentLogin($username, $password){
@@ -54,6 +69,63 @@ function checkConnection(){
 	if (!$connection) {
 	header("Location:". "../");
 }
+}
+
+function user_exits($username){
+
+	global $connection;
+	$query = "SELECT * FROM student_users WHERE username = '{$username}' ";
+	$select_query = mysqli_query($connection, $query);
+
+	if (!$select_query) {
+		confirmedQuery($select_query);
+	}
+
+	$count = mysqli_num_rows($select_query);
+
+	if ($count > 0) {
+		return true;
+	} else{
+		return false;
+	}
+}
+
+function email_exits($email){
+
+	global $connection;
+	$query = "SELECT * FROM student_users WHERE email = '{$email}' ";
+	$select_query = mysqli_query($connection, $query);
+
+	if (!$select_query) {
+		confirmedQuery($select_query);
+	}
+
+	$count = mysqli_num_rows($select_query);
+
+	if ($count > 0) {
+		return true;
+	} else{
+		return false;
+	}
+}
+
+function mobile_exits($mobile){
+
+	global $connection;
+	$query = "SELECT * FROM student_users WHERE mobile = '{$mobile}' ";
+	$select_query = mysqli_query($connection, $query);
+
+	if (!$select_query) {
+		confirmedQuery($select_query);
+	}
+
+	$count = mysqli_num_rows($select_query);
+
+	if ($count > 0) {
+		return true;
+	} else{
+		return false;
+	}
 }
 
 ?> 
