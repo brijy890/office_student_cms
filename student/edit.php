@@ -57,28 +57,50 @@ if(isset($_POST['edit'])){
 
 ?>
 
+<?php include '../inc/header.php';?>
 
- 
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/">Student-CMS</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li class="active"><a href="/">Home</a></li>
+		</ul>
+		
+		<?php 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Student CMS</title>
-	<link rel="stylesheet" href="/css/style.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
-</head>
-<body>
+		if (isset($_SESSION['username'])) {
+			echo "<ul class='nav navbar-nav pull-right'>
+					<li><a href='./admin/dashboard.php'><span class='glyphicon glyphicon-user'></span> {$_SESSION['username']}</a></li>
+				</ul>";
+		} else if(isset($_SESSION['student_username'])){
+			echo "<ul class='nav navbar-nav pull-right'>
+					<li><a href='../student/dashboard.php?student_id= {$_SESSION['student_id']}'><span class='glyphicon glyphicon-book'></span> {$_SESSION['student_username']}</a></li>
+				</ul>";
+		} 
+
+
+		else {
+			echo "<ul class='nav navbar-nav pull-right'>
+			<li><a href='../admin/login_form.php'><span class='glyphicon glyphicon-user'></span> Admin</a></li>
+		</ul>";
+		}
+
+		?>
+
+	</div>
+</nav>
 	
 	<div class="container">
         <div class="row centered-form">
-        <div class="col-xs-12 col-sm-8 col-md-12 col-sm-offset-2>
+        <div class="col-md-12">
         	<div class="panel panel-default">
         		<div class="panel-heading">
 			    		<h3 class="panel-title text-center">Edit User</h3>
 			 			</div>
 			 			<div class="panel-body">
-			    		<form role="form" method="POST" action="edit.php" name="edit-form">
+			    		<form role="form" method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>" name="edit-form">
 			    			
 			    			<div class="form-group">
 			    				<input type="text" name="username" id="username" class="form-control input-sm" placeholder="Username" required value="<?php echo $student_username; ?>">

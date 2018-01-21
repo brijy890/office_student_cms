@@ -2,7 +2,6 @@
 <?php include './inc/db.php';?>
 <?php include './inc/header.php';?>
 
-
 <nav class="navbar navbar-inverse">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -27,16 +26,16 @@
 
 		else {
 			echo "<ul class='nav navbar-nav pull-right'>
-			<li><a href='./admin/login_form.php'><span class='glyphicon glyphicon-user'></span> Admin</a></li>
+			<li><a href='./admin/login.php'><span class='glyphicon glyphicon-user'></span> Admin</a></li>
 		</ul>";
 		}
 
 		?>
 
-
 	</div>
 </nav>
 
+<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="jumbotron text-center">
@@ -45,9 +44,6 @@
 				<hr class="my-4">
 				<p></p>
 				<p class="lead">
-
-
-				<!-- <a class="btn btn-info btn-lg" href="./student/register_form.php" role="button">Register</a> -->
 				
 
 				<?php
@@ -59,15 +55,12 @@
 					echo "<a class='btn btn-info btn-lg' href='./admin/dashboard.php' role='button'>Register</a>";
 
 				} else{
-					echo "<a class='btn btn-info btn-lg' href='./student/register_form.php' role='button'>Register</a>";
+					echo "<a class='btn btn-info btn-lg' href='./student/register.php' role='button'>Register</a>";
 				}
 
 
 
 				?>
-
-
-
 
 				<?php
 
@@ -76,7 +69,7 @@
 				} else if(isset($_SESSION['username'])){
 					echo "<a class='btn btn-info btn-lg' href='./admin/dashboard.php' role='button'>Login</a>";
 				} else{
-					echo "<a class='btn btn-info btn-lg' href='./student/login_form.php' role='button'>Login</a>";
+					echo "<a class='btn btn-info btn-lg' href='./student/login.php' role='button'>Login</a>";
 				}
 
 
@@ -86,5 +79,6 @@
 				</div>
 			</div>
 		</div>
+</div>
 		
 <?php include './inc/footer.php';?>

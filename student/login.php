@@ -1,47 +1,11 @@
+<?php session_start(); ?>
 <?php include '../inc/db.php';?>
 <?php include '../inc/function.php';?>
 <?php checkConnection();?>
 
+<?php studentLogin();?>
 
-<?php 
-
-if(isset($_POST['register'])){
-	
-	$username	= trim($_POST['username']);
-	$password 	= trim($_POST['password']);
-
-	$password 	= md5($password);
-	$role = 'student';
-
-	$error = [
-		'username'	=>	'',
-		'password'	=>	''
-	];
-
-	if (admin_exits($username)) {
-		$error['username']	=	'Admin exits';
-	}
-
-	foreach ($error as $key => $value) {
-        
-        if (empty($value)) {
-
-            unset($error[$key]);
-        }
-    }
-
-    if (empty($error)) {
-
-        adminRegister($username, $password, $role);
-
-    }
-	
-}
-
-?>
-
-
-<?php include '../inc/header.php'; ?>
+<?php include '../inc/header.php';?>
 
 <nav class="navbar navbar-inverse">
 	<div class="container-fluid">
@@ -67,7 +31,7 @@ if(isset($_POST['register'])){
 
 		else {
 			echo "<ul class='nav navbar-nav pull-right'>
-			<li><a href='../admin/login.php'><span class='glyphicon glyphicon-user'></span> Admin</a></li>
+			<li><a href='../admin/login_form.php'><span class='glyphicon glyphicon-user'></span> Admin</a></li>
 		</ul>";
 		}
 
@@ -77,25 +41,19 @@ if(isset($_POST['register'])){
 </nav>
 	
 	<div class="container">
+
         <div class="row centered-form">
-        <div class="col-xs-12 col-sm-8 col-md-12">
+        <div class="col-md-12">
         	<div class="panel panel-default">
         		<div class="panel-heading">
-			    		<h3 class="panel-title text-center">Admin Registration</h3>
+			    		<h3 class="panel-title text-center">Student Login</h3>
 			 			</div>
 			 			<div class="panel-body">
 			    		<form role="form" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			    			
 
 			    			<div class="form-group">
-			    				<input type="text" name="username" id="username" class="form-control input-sm" placeholder="Username">
-			    				<?php
-
-			    				if (isset($error['username'])) {
-			    					echo "<p class='alert alert-info'>{$error['username']}</p>";
-			    				}
-
-			    				?>
+			    				<input type="text" name="username" id="username" class="form-control input-sm" placeholder="Username" required>
 			    			</div>
 
 
@@ -103,7 +61,7 @@ if(isset($_POST['register'])){
 			    						<input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password" required>
 	    					</div>
 			    			
-			    			<input type="submit" value="Register" class="btn btn-info btn-block" name='register'>
+			    			<input type="submit" value="Login" class="btn btn-info btn-block" name='login'>
 			    		
 			    		</form>
 			    	</div>

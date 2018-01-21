@@ -1,12 +1,12 @@
 body{
     background-color: #525252;
 }
-.centered-form{
+/*.centered-form{
 	margin-top: 60px;
 	margin-right: 60px !important;
 	margin-left: 60px !important;
 	
-}
+}*/
 
 /*.centered-form .panel{
 	background: rgba(255, 255, 255, 0.8);
@@ -17,3 +17,5 @@ body{
 	background-color: #337ab7 !important;
 	color: #fff !important;
 }
+
+

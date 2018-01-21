@@ -10,18 +10,7 @@ if (isset($_SESSION['username'])) {
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Sudent-CMS</title>
-	<link rel="stylesheet" href="/css/style.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
+<?php include '../inc/header.php'; ?>
 
 <nav class="navbar navbar-inverse">
 	<div class="container-fluid">
@@ -101,10 +90,10 @@ if (isset($_SESSION['username'])) {
 		echo "<td>{$user_id}</td>";
 		echo "<td>{$user_username}</td>";
 		if ($user_role === 'student') {
-			echo "<td><a href='./users_records.php?change_to_admin={$user_id}'>{$user_role}<a/></td>";
+			echo "<td><a class='btn btn-default' href='./users_records.php?change_to_admin={$user_id}'>{$user_role}<a/></td>";
 		}
 		else{
-			echo "<td><a href='./users_records.php?change_to_student={$user_id}'>{$user_role}<a/></td>";
+			echo "<td><a class='btn btn-default' href='./users_records.php?change_to_student={$user_id}'>{$user_role}<a/></td>";
 		}
 
 	}

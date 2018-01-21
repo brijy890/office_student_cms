@@ -1,25 +1,36 @@
 <?php include '../inc/db.php';?>
 <?php include '../inc/function.php';?>
 <?php checkConnection();?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Student CMS</title>
-	<link rel="stylesheet" href="/css/style.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
-</head>
-<body>
+
+<?php adminLogin(); ?>
+
+<?php include '../inc/header.php'; ?>
+
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/">Student-CMS</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li class="active"><a href="/">Home</a></li>
+		</ul>
+		
+		<ul class='nav navbar-nav pull-right'>
+			<li><a href='../admin/register.php'><span class='glyphicon glyphicon-user'></span> Admin Registration</a></li>
+		</ul>
+
+	</div>
+</nav>
 	
 	<div class="container">
         <div class="row centered-form">
-        <div class="col-xs-12 col-sm-8 col-md-12 col-sm-offset-2">
+        <div class="col-xs-12 col-sm-8 col-md-12">
         	<div class="panel panel-default">
         		<div class="panel-heading">
 			    		<h3 class="panel-title text-center">Admin Login</h3>
 			 			</div>
 			 			<div class="panel-body">
-			    		<form role="form" method="POST" action="login_auth.php">
+			    		<form role="form" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			    			
 
 			    			<div class="form-group">
