@@ -67,8 +67,8 @@ if (isset($_SESSION['student_username'])) {
 		<table class="table table-striped table-bordered">
 			<thead>
 				<tr>
-					<th>Student ID</th>
-					<th>Username</th>
+					<th>Field</th>
+      				<th>Values</th>
 				</tr>
 			</thead>
 		<tbody>
@@ -84,9 +84,26 @@ if (isset($_SESSION['student_username'])) {
 		$student_mobile 		= $row['mobile'];
 		$student_address 		= $row['address'];
 		echo '<tr>';
-		echo "<td>{$student_id}</td>";
-		echo "<td>{$student_username}</td>";
-		echo "<td><a href='./dashboard-2.php?s_id=$student_id' class='btn btn-primary btn-block'>View</a></td>";
+		echo "<td>Student Id</td><td>{$student_id}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Username</td><td>{$student_username}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Firstname</td><td>{$student_first_name}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Lastname</td><td>{$student_last_name}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Email</td><td>{$student_email}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Mobile Number</td><td>{$student_mobile}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Address</td><td>{$student_address}</td>";
+		echo "</tr>";
 
 	}
 			
@@ -96,6 +113,7 @@ if (isset($_SESSION['student_username'])) {
   ?>
     </tbody>
   </table>
+  <a href="edit.php?student_id=<?php echo $_SESSION['student_id']?>" class="btn btn-primary">Edit</a>
 </div>
 
 </body>
