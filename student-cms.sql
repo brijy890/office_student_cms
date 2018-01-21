@@ -37,7 +37,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (4,'brij123','e10adc3949ba59abbe56e057f20f883e','admin'),(5,'brij890','e10adc3949ba59abbe56e057f20f883e','student');
+INSERT INTO `admin` VALUES (4,'brij123','e10adc3949ba59abbe56e057f20f883e','student'),(5,'brij890','e10adc3949ba59abbe56e057f20f883e','admin');
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,11 +54,15 @@ CREATE TABLE `student_users` (
   `first_name` varchar(10) NOT NULL,
   `last_name` varchar(10) NOT NULL,
   `email` varchar(20) NOT NULL,
+  `user_image` text NOT NULL,
   `mobile` bigint(12) NOT NULL,
   `address` varchar(100) NOT NULL,
+  `dob` date NOT NULL DEFAULT '0000-01-01',
+  `age` int(4) NOT NULL,
+  `gender` varchar(10) NOT NULL,
   `password` varchar(40) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +71,7 @@ CREATE TABLE `student_users` (
 
 LOCK TABLES `student_users` WRITE;
 /*!40000 ALTER TABLE `student_users` DISABLE KEYS */;
-INSERT INTO `student_users` VALUES (1,'brij890','brij','yadav','brij@gmail.com',9167751696,'malad','e10adc3949ba59abbe56e057f20f883e');
+INSERT INTO `student_users` VALUES (7,'brij123','brij','yadav','brij@gmail.com','Screenshot from 2018-01-21 16-37-01.png',9167751696,'malad','2018-01-01',0,'male','e10adc3949ba59abbe56e057f20f883e');
 /*!40000 ALTER TABLE `student_users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -80,4 +84,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-20 21:33:34
+-- Dump completed on 2018-01-21 21:45:15

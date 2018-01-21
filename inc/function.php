@@ -125,20 +125,16 @@ function confirmedQuery($query){
 
 
 //student registration
-function studentResgister($username, $first_name, $last_name, $email, $mobile, $address, $password){
-
+function studentResgister($username, $first_name, $last_name, $email, $mobile, $address, $dob, $gender, $password, $user_image, $age){
 	global $connection;
-	// $password = md5($password);
-	// $password   = password_hash($password, PASSWORD_BCRYPT , array('cost' => 12));
-	$query = "INSERT INTO student_users (username, first_name, last_name, email, address, password, mobile) VALUES ('{$username}', '{$first_name}', '{$last_name}', '{$email}', '{$address}', '{$password}', '{$mobile}')";
+
+	$query = "INSERT INTO student_users (username, first_name, last_name, email, address, password, mobile, dob, gender, user_image, age) VALUES ('{$username}', '{$first_name}', '{$last_name}', '{$email}', '{$address}', '{$password}', '{$mobile}', '{$dob}', '{$gender}', '{$user_image}', '{$age}')";
 
 	$register_user_query = mysqli_query($connection, $query);
 
-	if (!$register_user_query) {
-		confirmedQuery($register_user_query);
-	} else {
-	header("Location:". '../student/login_form.php');
-	}
+	confirmedQuery($register_user_query);
+
+	redirect("../student/login.php");
 }
 
 // student login function

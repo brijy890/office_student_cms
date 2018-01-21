@@ -13,8 +13,18 @@ if(isset($_POST['submit'])){
 	$email 				= trim($_POST['email']);
 	$mobile 			= trim($_POST['mobile']);
 	$address			= trim($_POST['address']);
+	$gender 			= trim($_POST['gender']);
+	$dob 				= trim($_POST['dob']);
+	$user_image 		= $_FILES['user_image']['name'];
+	$user_image_temp 	= $_FILES['user_image']['tmp_name'];
 	$password 			= trim($_POST['password']);
 	$confirm_password 	= trim($_POST['password_confirmation']);
+
+	$date = date(DATE_ATOM);
+
+	$age = $date - $dob;
+
+	move_uploaded_file($user_image_temp, "../images/user/$user_image");
 
 	$error = [
 		'username' 			=>	'',
@@ -23,6 +33,8 @@ if(isset($_POST['submit'])){
 		'email'				=>	'',
 		'mobile'			=>	'',
 		'address'			=>	'',
+		'gender'			=>	'',
+		'dob'				=>	'',
 		'password'			=>	'',
 		'confirm_password'	=>	'',
 		'msg'				=>	''
@@ -72,6 +84,14 @@ if(isset($_POST['submit'])){
 		$error['address']		=	'Address cannot be empty';
 	}
 
+	if ($gender == '') {
+		$error['gender']			=	'Please select gender';
+	}
+
+	if ($dob == '') {
+		$error['dob']	=	'Select Date of birth';
+	}
+
 	if ($password == '') {
 		$error['password']	=	'Password cannot be empty';
 	}	else if ($confirm_password == '') {
@@ -81,9 +101,6 @@ if(isset($_POST['submit'])){
 	}	else{
 		$password = md5($password);
 	}
-
-
-
 
 
 	foreach ($error as $key => $value) {
@@ -96,7 +113,7 @@ if(isset($_POST['submit'])){
 
     if (empty($error)) {
 
-        studentResgister($username, $first_name, $last_name, $email, $mobile, $address, $password);
+studentResgister($username, $first_name, $last_name, $email, $mobile, $address, $dob, $gender, $password, $user_image, $age);
 
     }
 }
@@ -151,7 +168,7 @@ if(isset($_POST['submit'])){
 			    		<h3 class="panel-title text-center">Student Registration</h3>
 			 			</div>
 			 			<div class="panel-body">
-			    		<form role="form" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="registration-form">
+			    		<form role="form" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="registration-form" enctype="multipart/form-data">
 			    			
 			    			<div class="form-group">
 			    				<input type="text" name="username" id="username" class="form-control input-sm" placeholder="Username"
@@ -227,6 +244,50 @@ if(isset($_POST['submit'])){
 			    	
 			    				?>
 			    			</div>
+
+			    			<div class="row">
+			    				
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			    						<input type="date" name="dob" id="dob" class="form-control input-sm">
+			    						
+									<?php 
+
+									if(isset($error['dob'])){
+									echo "<p class='alert alert-info'>{$error['dob']}</p>";
+									}
+
+									?>
+
+			    					</div>
+			    				</div>
+
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+										<select class="form-control" id="gender" name="gender">
+										<option value="">Select Gender</option>
+										<option value="male">Male</option>
+										<option value="female">Female</option>
+										</select>
+
+										<?php 
+
+										if(isset($error['gender'])){
+										echo "<p class='alert alert-info'>{$error['gender']}</p>";
+										}
+
+										?>
+
+			    					</div>
+			    				</div>
+
+
+			    			</div>
+
+			    			<div class="form-group">
+			    				<input type="file" name="user_image" id="image">
+			    			</div>
+
 
 			    			<div class="row">
 			    				<div class="col-xs-6 col-sm-6 col-md-6">

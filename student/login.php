@@ -31,7 +31,7 @@
 
 		else {
 			echo "<ul class='nav navbar-nav pull-right'>
-			<li><a href='../admin/login_form.php'><span class='glyphicon glyphicon-user'></span> Admin</a></li>
+			<li><a href='../admin/login.php'><span class='glyphicon glyphicon-user'></span> Admin</a></li>
 		</ul>";
 		}
 
