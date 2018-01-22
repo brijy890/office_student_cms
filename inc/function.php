@@ -18,112 +18,6 @@ function confirmedQuery($query){
 	}
 }
 
-//studentValidate
-// function studentValidate(){
-
-// 	global $connection;
-// // 	if(isset($_POST['submit'])){
-	
-// // 	$username			= trim($_POST['username']);
-// // 	$first_name			= trim($_POST['first_name']);
-// // 	$last_name			= trim($_POST['last_name']);
-// // 	$email 				= trim($_POST['email']);
-// // 	$mobile 			= trim($_POST['mobile']);
-// // 	$address			= trim($_POST['address']);
-// // 	$password 			= trim($_POST['password']);
-// // 	$confirm_password 	= trim($_POST['password_confirmation']);
-
-// // 	$error = [
-// // 		'username' 			=>	'',
-// // 		'first_name'		=>	'',
-// // 		'last_name'			=>	'',
-// // 		'email'				=>	'',
-// // 		'mobile'			=>	'',
-// // 		'address'			=>	'',
-// // 		'password'			=>	'',
-// // 		'confirm_password'	=>	'',
-// // 		'msg'				=>	''
-// // 	];
-
-// // 	if ($username == '') {
-// // 		$error['username']	=	'username cannot be empty';
-// // 	} else {
-// // 			if (strlen($username) < 5) {
-// // 				$error['username']	=	'username should have more then 5 charachter';
-// // 			} else {
-// // 				if (user_exits($username)) {
-// // 					$error['username']	=	"Username exits, <a href='login_form.php' class='btn btn-primary'>Login</a>";
-// // 				}
-// // 			}
-// // 	}
-
-// // 	if ($first_name == '') {
-// // 		$error['first_name']	=	'Firstname cannot be empty';
-// // 	}
-
-// // 	if ($last_name == '') {
-// // 		$error['last_name']		=	'last_name cannot be empty';
-// // 	}
-
-// // 	if ($email == '') {
-// // 		$error['email']			=	'Email cannot be empty';
-// // 	} else{
-// // 		if (email_exits($email)) {
-// // 			$error['email']		=	'This email id already exits';
-// // 		}
-// // 	}
-
-// // 	if ($mobile == '') {
-// // 		$error['mobile']		=	'Mobile number cannot be empty';
-// // 	} else{
-// // 		if ((strlen($mobile)) != 10) {
-// // 			$error['mobile']	=	'Mobile number should be of 10 digits';
-// // 		} else {
-// // 			if (mobile_exits($mobile)) {
-// // 				$error['mobile']	=	'This mobile no already exits';
-// // 			}
-// // 		}
-// // 	}
-
-// // 	if ($address == '') {
-// // 		$error['address']		=	'Address cannot be empty';
-// // 	}
-
-// // 	if ($password == '') {
-// // 		$error['password']	=	'Password cannot be empty';
-// // 	}	else if ($confirm_password == '') {
-// // 		$error['confirm_password']	=	'Confirm password cannot be empty';
-// // 	}	else if ($password != $confirm_password) {
-// // 		$error['msg']	=	'Password and confirm_password should be same';
-// // 	}	else{
-// // 		$password = md5($password);
-// // 	}
-
-
-
-
-
-// // 	foreach ($error as $key => $value) {
-        
-// //         if (empty($value)) {
-
-// //             unset($error[$key]);
-// //         } else
-// //         {
-// //         	return $error;
-// //         }
-// //     }
-
-// //     if (empty($error)) {
-
-// //         studentResgister($username, $first_name, $last_name, $email, $mobile, $address, $password);
-
-// //     }
-// // }
-// }
-
-
-
 //student registration
 function studentResgister($username, $first_name, $last_name, $email, $mobile, $address, $dob, $gender, $password, $user_image, $age){
 	global $connection;
@@ -143,13 +37,11 @@ function studentLogin(){
 	global $connection;
 	$student = new Student();
 	if(isset($_POST['login'])){
-
 	$login_username = $_POST['username'];
 	$login_password = md5($_POST['password']);
 	$student->studentLogin($login_username, $login_password);
 	}
 }
-
 
 // admin registration
 function adminRegister($username, $password, $role){
@@ -302,5 +194,140 @@ function mobile_exits($mobile){
 		return false;
 	}
 }
+
+function usernameValidate($username){
+
+	global $connection;
+	$message = '';
+	if ($username == '') {
+		$message = 'username cannot be empty';
+	} else{
+		if (strlen($username) < 5)
+		{
+			$message =	'username should have more then 5 charachter';
+		} else{
+			if (user_exits($username)) 
+			{
+				$message	=	"Username exits, <a href='login.php' class='btn btn-primary'>Login</a>";
+			}
+		}
+	}
+	return $message;
+}
+
+function firstnameValidate($first_name){
+
+	global $connection;
+	$message = '';
+	if ($first_name == '') {
+		$message = 'Firstname cannot be empty';
+	} else{
+			if (!preg_match("/^[a-zA-Z ]*$/",$first_name)) 
+			{
+				$message = "Only letters and white space allowed";
+			}
+	}
+	return $message;
+}
+
+function lirstnameValidate($last_name){
+
+	global $connection;
+	$message = '';
+	if ($last_name == '') {
+		$message = 'Lastname cannot be empty';
+	} else{
+			if (!preg_match("/^[a-zA-Z ]*$/",$last_name)) 
+			{
+				$message = "Only letters and white space allowed";
+			}
+	}
+	return $message;
+}
+
+
+function emailValidate($email){
+
+	global $connection;
+	$message = '';
+	if ($email == '') {
+		$message			=	'Email cannot be empty';
+		} else{
+		if (email_exits($email)) {
+			$message		=	'This email id already exits';
+		}
+	}
+	return $message;
+}
+
+function mobileValidate($mobile){
+
+	global $connection;
+	$message = '';
+
+	if ($mobile == '') {
+		$message		=	'Mobile number cannot be empty';
+	} else{
+		if ((strlen($mobile)) != 10) {
+			$message	=	'Mobile number should be of 10 digits';
+		} else {
+			if (mobile_exits($mobile)) {
+				$message	=	'This mobile no already exits';
+			}
+		}
+	}
+	return $message;
+}
+
+function addressValidate($address){
+
+	global $connection;
+	$message = '';
+
+	if ($address == '') {
+		$message		=	'Address cannot be empty';
+	}
+	return $message;
+}
+
+function genderValidate($gender){
+
+	global $connection;
+	$message = '';
+
+	if ($gender == ''){
+		$message =	'Gender cannot be empty';
+	}
+	return $message;
+}
+
+function dobValidate($dob){
+
+	global $connection;
+	$message = '';
+
+	if ($dob == '') {
+		$message		=	'DOB cannot be empty';
+	}
+	return $message;
+}
+
+
+function  passwordValidate($password, $confirm_password){
+
+	global $connection;
+	$message = '';
+
+	if ($password == '') {
+		$message	=	'Password cannot be empty';
+	} else{
+		if ($password != $confirm_password) {
+			$message = 'Password and confirm password does not matched';
+		}
+	}
+	return $message;
+}
+
+
 
 ?> 

@@ -1,6 +1,5 @@
 
 <?php session_start(); ?>
-
 <?php include '../inc/db.php';?>
 
 <?php 
@@ -10,19 +9,7 @@ if (isset($_SESSION['username'])) {
 }
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Sudent-CMS</title>
-	<link rel="stylesheet" href="/css/style.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
+<?php include '../inc/header.php';?>
 
 <nav class="navbar navbar-inverse">
 	<div class="container-fluid">
@@ -71,15 +58,20 @@ if (isset($_SESSION['username'])) {
 		} 
 
 		while ($row = mysqli_fetch_assoc($select_user)) {
-		$student_id = $row['id'];
-		$student_username	= $row['username'];
-		$student_email = $row['email'];
-		$student_first_name =$row['first_name'];
-		$student_last_name = $row['last_name'];
-		$student_mobile = $row['mobile'];
-		$student_address = $row['address'];
+		$student_id 			= $row['id'];
+		$student_username 		= $row['username'];
+		$student_email 			= $row['email'];
+		$student_first_name 	= $row['first_name'];
+		$student_last_name 		= $row['last_name'];
+		$student_mobile 		= $row['mobile'];
+		$student_address 		= $row['address'];
+		$student_dob			= $row['dob'];
+		$student_age			= $row['age'];
+		$student_gender			= $row['gender'];
+		$student_image			= $row['user_image'];
+
 		echo '<tr>';
-		echo "<td>Student Id</td><td>{$student_id}</td>";
+		echo "<td>Student Image</td><td><img width='50' src='../images/$student_image'></td>";
 		echo "</tr>";
 		echo "<tr>";
 		echo "<td>Username</td><td>{$student_username}</td>";
@@ -95,6 +87,15 @@ if (isset($_SESSION['username'])) {
 		echo "</tr>";
 		echo "<tr>";
 		echo "<td>Mobile Number</td><td>{$student_mobile}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Date of Birth</td><td>{$student_dob}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Gender</td><td>{$student_gender}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Age</td><td>{$student_age}</td>";
 		echo "</tr>";
 		echo "<tr>";
 		echo "<td>Address</td><td>{$student_address}</td>";

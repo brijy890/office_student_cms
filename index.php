@@ -2,6 +2,14 @@
 <?php include './inc/db.php';?>
 <?php include './inc/header.php';?>
 
+<?php
+
+if ($_SESSION['student_image']) {
+	$image = $_SESSION['student_image'];
+}
+
+?>
+
 <nav class="navbar navbar-inverse">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -19,7 +27,7 @@
 				</ul>";
 		} else if(isset($_SESSION['student_username'])){
 			echo "<ul class='nav navbar-nav pull-right'>
-					<li><a href='./student/dashboard.php?student_id= {$_SESSION['student_id']}'><span class='glyphicon glyphicon-book'></span> {$_SESSION['student_username']}</a></li>
+					<li><a href='./student/dashboard.php?student_id= {$_SESSION['student_id']}'><span><img width='15' src='../images/$image'></span> {$_SESSION['student_username']}</a></li>
 				</ul>";
 		} 
 

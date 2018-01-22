@@ -1,12 +1,12 @@
 
-
-//Ajax call
-
-
+<!DOCTYPE html>
+<html>
+<head>
+<script>
 function showUser(str) {
 	console.log(str);
-  if (str == '') {
-    document.getElementById("txtHint").innerHTML="here";
+  if (str=="") {
+    document.getElementById("txtHint").innerHTML="";
     return;
   }
   if (window.XMLHttpRequest) {
@@ -23,3 +23,21 @@ function showUser(str) {
   xmlhttp.open("GET","../admin/view.php?q="+str,true);
   xmlhttp.send();
 }
+</script>
+</head>
+<body>
+
+<form>
+<select name="users" onchange="showUser(this.value)">
+<option value="">Select a person:</option>
+<option value="1">Peter Griffin</option>
+<option value="2">Lois Griffin</option>
+<option value="18">Joseph Swanson</option>
+<option value="4">Glenn Quagmire</option>
+</select>
+</form>
+<br>
+<div id="txtHint"><b>Person info will be listed here.</b></div>
+
+</body>
+</html>

@@ -5,6 +5,10 @@
 
 if (isset($_SESSION['student_username'])) {
 	$student_username = $_SESSION['student_username'];
+
+	if ($_SESSION['student_image']) {
+	$image = $_SESSION['student_image'];
+	}
 }
 
 ?> 
@@ -33,7 +37,7 @@ if (isset($_SESSION['student_username'])) {
 		<ul class="nav navbar-nav pull-right">
 
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="./admin/login_form.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-book"></span> <?php echo $student_username; ?></a>
+					<a class="nav-link dropdown-toggle" href="./admin/login_form.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span><img width='15' src="<?php echo"../images/$image";?>"></span> <?php echo $student_username; ?></a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="./logout.php">Logout</a>
 					</div>
@@ -83,8 +87,13 @@ if (isset($_SESSION['student_username'])) {
 		$student_last_name 		= $row['last_name'];
 		$student_mobile 		= $row['mobile'];
 		$student_address 		= $row['address'];
+		$student_dob			= $row['dob'];
+		$student_age			= $row['age'];
+		$student_gender			= $row['gender'];
+		$student_image			= $row['user_image'];
+
 		echo '<tr>';
-		echo "<td>Student Id</td><td>{$student_id}</td>";
+		echo "<td>Student Image</td><td><img width='50' src='../images/$student_image'></td>";
 		echo "</tr>";
 		echo "<tr>";
 		echo "<td>Username</td><td>{$student_username}</td>";
@@ -100,6 +109,15 @@ if (isset($_SESSION['student_username'])) {
 		echo "</tr>";
 		echo "<tr>";
 		echo "<td>Mobile Number</td><td>{$student_mobile}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Date of Birth</td><td>{$student_dob}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Gender</td><td>{$student_gender}</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Age</td><td>{$student_age}</td>";
 		echo "</tr>";
 		echo "<tr>";
 		echo "<td>Address</td><td>{$student_address}</td>";

@@ -20,11 +20,15 @@ if(isset($_POST['submit'])){
 	$password 			= trim($_POST['password']);
 	$confirm_password 	= trim($_POST['password_confirmation']);
 
+	if ($user_image == '') {
+		$user_image = 'user.png';
+	}
+
 	$date = date(DATE_ATOM);
 
 	$age = $date - $dob;
 
-	move_uploaded_file($user_image_temp, "../images/user/$user_image");
+	move_uploaded_file($user_image_temp, "../images/$user_image");
 
 	$error = [
 		'username' 			=>	'',
@@ -40,68 +44,43 @@ if(isset($_POST['submit'])){
 		'msg'				=>	''
 	];
 
-	if ($username == '') {
-		$error['username']	=	'username cannot be empty';
-	} else {
-			if (strlen($username) < 5) {
-				$error['username']	=	'username should have more then 5 charachter';
-			} else {
-				if (user_exits($username)) {
-					$error['username']	=	"Username exits, <a href='login_form.php' class='btn btn-primary'>Login</a>";
+
+	$error['username'] 	= usernameValidate($username);
+	if (empty($error['username'])) {
+		$error['first_name'] 	= firstnameValidate($first_name);
+
+			if (empty($error['first_name'])) {
+			$error['last_name'] 	= lirstnameValidate($last_name);
+
+				if (empty($error['last_name'])) {
+				$error['email'] 	= emailValidate($email);
+
+					if (empty($error['email'])) {
+					$error['mobile'] 	= mobileValidate($mobile);
+
+						if (empty($error['mobile'])) {
+						$error['address'] 	= addressValidate($address);
+
+							if (empty($error['address'])) {
+							$error['gender'] 	= genderValidate($gender);
+
+								if (empty($error['gender'])) {
+								$error['dob'] 	= dobValidate($dob);
+
+									if (empty($error['dob'])) {
+									$error['password'] 	= passwordValidate($password, $confirm_password);
+
+										if (empty($error['password'])) {
+											$password = md5($password);
+										}
+								}
+							}
+						}
+					}
 				}
 			}
-	}
-
-	if ($first_name == '') {
-		$error['first_name']	=	'Firstname cannot be empty';
-	}
-
-	if ($last_name == '') {
-		$error['last_name']		=	'last_name cannot be empty';
-	}
-
-	if ($email == '') {
-		$error['email']			=	'Email cannot be empty';
-	} else{
-		if (email_exits($email)) {
-			$error['email']		=	'This email id already exits';
 		}
 	}
-
-	if ($mobile == '') {
-		$error['mobile']		=	'Mobile number cannot be empty';
-	} else{
-		if ((strlen($mobile)) != 10) {
-			$error['mobile']	=	'Mobile number should be of 10 digits';
-		} else {
-			if (mobile_exits($mobile)) {
-				$error['mobile']	=	'This mobile no already exits';
-			}
-		}
-	}
-
-	if ($address == '') {
-		$error['address']		=	'Address cannot be empty';
-	}
-
-	if ($gender == '') {
-		$error['gender']			=	'Please select gender';
-	}
-
-	if ($dob == '') {
-		$error['dob']	=	'Select Date of birth';
-	}
-
-	if ($password == '') {
-		$error['password']	=	'Password cannot be empty';
-	}	else if ($confirm_password == '') {
-		$error['confirm_password']	=	'Confirm password cannot be empty';
-	}	else if ($password != $confirm_password) {
-		$error['msg']	=	'Password and confirm_password should be same';
-	}	else{
-		$password = md5($password);
-	}
-
 
 	foreach ($error as $key => $value) {
         
@@ -117,9 +96,6 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
 
     }
 }
-
-
-
 ?>
 
 
@@ -284,11 +260,6 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
 
 			    			</div>
 
-			    			<div class="form-group">
-			    				<input type="file" name="user_image" id="image">
-			    			</div>
-
-
 			    			<div class="row">
 			    				<div class="col-xs-6 col-sm-6 col-md-6">
 			    					<div class="form-group">
@@ -314,6 +285,10 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
 			    				?>
 			    					</div>
 			    				</div>
+			    			</div>
+
+			    			<div class="form-group">
+			    				<input type="file" name="user_image" id="image">
 			    			</div>
 			    			
 			    			<input type="submit" value="Register" class="btn btn-primary btn-block" name='submit'>

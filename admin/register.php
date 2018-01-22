@@ -88,7 +88,8 @@ if(isset($_POST['register'])){
 			    			
 
 			    			<div class="form-group">
-			    				<input type="text" name="username" id="username" class="form-control input-sm" placeholder="Username">
+			    				<input type="text" name="username" id="username" class="form-control input-sm" placeholder="Username" 
+			    				value="<?php echo isset($username) ? $username : '';?>">
 			    				<?php
 
 			    				if (isset($error['username'])) {
