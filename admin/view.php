@@ -1,8 +1,5 @@
 
 <?php include '../inc/db.php';?>
-
-
-
  
 <?php
 
@@ -34,19 +31,20 @@ $count = ceil($count / $per_page);
 
 ?>
 
-<div class="container">
+
   <h2 class="text-center">Students Records</h2>      
   <table class="table table-striped table-bordered">
     <thead>
       <tr>
       	<th>Student ID</th>
         <th>Username</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
 
 		<?php
-		global $connection;
+		
 		$query = "SELECT * FROM student_users LIMIT $page_1, $per_page";
 		$select_user = mysqli_query($connection, $query);
 
@@ -66,25 +64,12 @@ $count = ceil($count / $per_page);
 		echo "<td>{$student_id}</td>";
 		echo "<td>{$student_username}</td>";
 		echo "<td><a href='./detail_dashboard.php?s_id=$student_id' class='btn btn-primary btn-block'>View</a></td>";
+    echo "</tr>";
 
 	}
   ?>
     </tbody>
   </table>
   <a href="./users_records.php" class="btn btn-default">View Users</a>
-</div>
 
-<ul class="pager">
 
-            <?php
-
-            for ($i=1; $i <=$count ; $i++) {
-
-                if ($i == $page) {
-                     echo "<li><a class='active_link' href='dashboard.php?page={$i}'>{$i}</a></li>";
-                 } else{
-                     echo "<li><a href='dashboard.php?page={$i}'>{$i}</a></li>";
-                 }  
-            }
-            ?>
-  </ul>

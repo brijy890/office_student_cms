@@ -147,7 +147,8 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
 			    		<form role="form" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="registration-form" enctype="multipart/form-data">
 			    			
 			    			<div class="form-group">
-			    				<input type="text" name="username" id="username" class="form-control input-sm" placeholder="Username"
+			    				<span id="Uerror"></span>
+			    				<input type="text" name="username" onkeyup="validate(this.value)" id="username" class="form-control input-sm" placeholder="Username"
 			    				value="<?php echo isset($username) ? $username : ''; ?>">
 
 			    				<?php 
@@ -199,7 +200,7 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
 
 			    			<div class="form-group">
 			    				<input type="tel" name="mobile" id="mobile" class="form-control input-sm" placeholder="Mobile Number"
-			    				value="<?php echo isset($mobile) ? $mobile : ''; ?>">
+			    				value="<?php echo isset($mobile) ? $mobile : ''; ?>" onkeyup="validateMobile()">
 			    				<?php 
 
 			    				if(isset($error['mobile'])){
@@ -299,6 +300,49 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
     		</div>
     	</div>
     </div>
+
+<script>
+	
+	function validate(username){
+
+		$.ajax({
+			type: "get",
+			url: "../admin/user.php?username="+username,
+			dataType: "json",                 
+			success: function(data) {
+			console.log(data); 
+			if (data == 0) {
+				$("#Uerror").html("Valid username");
+			} else{
+				$("#Uerror").html("This username already exists");
+			}
+			}
+
+		});
+
+		$("#username").blur(function(){
+			$("#Uerror").html(" ");
+		});
+		
+	}
+
+	
+
+	function validateMobile(){
+		var mobile = document.getElementById("mobile").value;
+		var phoneno = /^[1-9]{1}[0-9]{9}$/;
+		console.log(mobile);
+
+		if((mobile.match(phoneno))){
+			console.log("Valid");
+		} else{
+			console.log("Invalid");
+		}
+
+	}
+
+</script>
+
 
 </body>
 </html>

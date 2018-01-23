@@ -53,7 +53,7 @@ if (isset($_SESSION['username'])) {
 		$page_1 = ($page * $per_page) - $per_page;
 		}
 
-		$student_count_query = "SELECT * FROM student_users";
+		$student_count_query = "SELECT * FROM admin";
 		$student_query = mysqli_query($connection, $student_count_query);
 		$count = mysqli_num_rows($student_query);
 
@@ -147,9 +147,9 @@ if (isset($_GET['change_to_student'])) {
             for ($i=1; $i <=$count ; $i++) {
 
                 if ($i == $page) {
-                     echo "<li><a class='active_link' href='dashboard.php?page={$i}'>{$i}</a></li>";
+                     echo "<li><a class='active_link' href='users_records.php?page={$i}'>{$i}</a></li>";
                  } else{
-                     echo "<li><a href='dashboard.php?page={$i}'>{$i}</a></li>";
+                     echo "<li><a href='users_records.php?page={$i}'>{$i}</a></li>";
                  }  
             }
             ?>

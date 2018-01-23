@@ -10,6 +10,7 @@ if ($_SESSION['student_image']) {
 
 ?>
 
+<div id="data">
 <nav class="navbar navbar-inverse">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -63,7 +64,7 @@ if ($_SESSION['student_image']) {
 					echo "<a class='btn btn-info btn-lg' href='./admin/dashboard.php' role='button'>Register</a>";
 
 				} else{
-					echo "<a class='btn btn-info btn-lg' href='./student/register.php' role='button'>Register</a>";
+					echo "<a class='btn btn-info btn-lg' id='register'  role='button'>Register</a>";
 				}
 
 
@@ -77,7 +78,7 @@ if ($_SESSION['student_image']) {
 				} else if(isset($_SESSION['username'])){
 					echo "<a class='btn btn-info btn-lg' href='./admin/dashboard.php' role='button'>Login</a>";
 				} else{
-					echo "<a class='btn btn-info btn-lg' href='./student/login.php' role='button'>Login</a>";
+					echo "<a class='btn btn-info btn-lg'  id='login' role='button'>Login</a>";
 				}
 
 
@@ -88,5 +89,43 @@ if ($_SESSION['student_image']) {
 			</div>
 		</div>
 </div>
+</div>
+
+<script>
+	
+	$( document ).ready(function() {
+
+     var login = $("#login");
+     login.click(function(){
+
+     		$.ajax({
+			type: "get",
+			url: "../student/login.php",
+			dataType: "html",                 
+			success: function(data) {
+			$("#data").html(data);
+			}
+
+		});
+     });
+
+
+     var register = $("#register");
+     register.click(function(){
+
+     		$.ajax({
+			type: "get",
+			url: "../student/register.php",
+			dataType: "html",                 
+			success: function(data) {
+			console.log(data);
+			$("#data").html(data);
+			}
+		});
+ 
+     });
+});
+
+</script>
 		
 <?php include './inc/footer.php';?>
