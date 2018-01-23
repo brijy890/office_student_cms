@@ -64,7 +64,7 @@ if ($_SESSION['student_image']) {
 					echo "<a class='btn btn-info btn-lg' href='./admin/dashboard.php' role='button'>Register</a>";
 
 				} else{
-					echo "<a class='btn btn-info btn-lg' id='register'  role='button'>Register</a>";
+					echo "<a class='btn btn-info btn-lg' href='./student/register.php' id='register'  role='button'>Register</a>";
 				}
 
 
@@ -91,7 +91,7 @@ if ($_SESSION['student_image']) {
 </div>
 </div>
 
-<script>
+<!-- <script>
 	
 	$( document ).ready(function() {
 
@@ -126,6 +126,6 @@ if ($_SESSION['student_image']) {
      });
 });
 
-</script>
+</script> -->
 		
 <?php include './inc/footer.php';?>

@@ -5,7 +5,9 @@
 
 if (isset($_GET['q'])) { 
 	$q = intval($_GET['q']);
-} 
+} else{
+	$q = 2;
+}
 $per_page = $q;
 
 if (isset($_GET['page'])) {
@@ -71,5 +73,20 @@ $count = ceil($count / $per_page);
     </tbody>
   </table>
   <a href="./users_records.php" class="btn btn-default">View Users</a>
+
+<ul class="pager">
+
+            <?php
+
+            for ($i=1; $i <=$count ; $i++) {
+
+                if ($i == $page) {
+                     echo "<li><a class='active_link' href='dashboard.php?page={$i}'>{$i}</a></li>";
+                 } else{
+                     echo "<li><a href='dashboard.php?page={$i}'>{$i}</a></li>";
+                 }  
+            }
+            ?>
+  </ul>
 
 

@@ -148,7 +148,7 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
 			    			
 			    			<div class="form-group">
 			    				<span id="Uerror"></span>
-			    				<input type="text" name="username" onkeyup="validate(this.value)" id="username" class="form-control input-sm" placeholder="Username"
+			    				<input type="text" name="username" onblur="validate(this.value)" id="username" class="form-control input-sm" placeholder="Username"
 			    				value="<?php echo isset($username) ? $username : ''; ?>">
 
 			    				<?php 
@@ -310,7 +310,7 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
 			url: "../admin/user.php?username="+username,
 			dataType: "json",                 
 			success: function(data) {
-			console.log(data); 
+			console.log(data);
 			if (data == 0) {
 				$("#Uerror").html("Valid username");
 			} else{
@@ -320,9 +320,9 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
 
 		});
 
-		$("#username").blur(function(){
-			$("#Uerror").html(" ");
-		});
+		// $("#username").blur(function(){
+		// 	$("#Uerror").html(" ");
+		// });
 		
 	}
 
