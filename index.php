@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <?php include './inc/db.php';?>
 <?php include './inc/header.php';?>
 
@@ -67,8 +66,6 @@ if ($_SESSION['student_image']) {
 					echo "<a class='btn btn-info btn-lg' href='./student/register.php' id='register'  role='button'>Register</a>";
 				}
 
-
-
 				?>
 
 				<?php
@@ -78,7 +75,7 @@ if ($_SESSION['student_image']) {
 				} else if(isset($_SESSION['username'])){
 					echo "<a class='btn btn-info btn-lg' href='./admin/dashboard.php' role='button'>Login</a>";
 				} else{
-					echo "<a class='btn btn-info btn-lg'  id='login' role='button'>Login</a>";
+					echo "<a class='btn btn-info btn-lg'  href='./student/login.php' id='login' role='button'>Login</a>";
 				}
 
 

@@ -36,15 +36,14 @@ if (isset($_SESSION['username'])) {
 
 		<?php
 
-		$per_page = 5;
+		$per_page = 2;
 
 		if (isset($_GET['page'])) {
-
-		$page = $_GET['page'];
+			$page = $_GET['page'];
 
 		} else {
 
-		$page = "";
+		$page = "1";
 		}
 
 		if ($page == "" || $page == 1) {

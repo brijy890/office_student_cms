@@ -8,6 +8,10 @@ if (isset($_SESSION['username'])) {
 	$username = $_SESSION['username'];
 }
 
+if (isset($_GET['page'])) {
+	$page = $_GET['page'];
+}
+
 ?>
 <?php include '../inc/header.php';?>
 
@@ -106,7 +110,7 @@ if (isset($_SESSION['username'])) {
     </tbody>
   </table>
 
-  <a href="./dashboard.php" class="btn btn-info">Back</a>
+  <a href="./dashboard.php?page=<?php echo $page;?>" class="btn btn-info">Back</a>
 </div>
 
 </body>

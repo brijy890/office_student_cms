@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <?php include '../inc/db.php';?>
 <?php include '../inc/function.php';?>
 <?php checkConnection();?>
@@ -148,7 +147,7 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
 			    			
 			    			<div class="form-group">
 			    				<span id="Uerror"></span>
-			    				<input type="text" name="username" onblur="validate(this.value)" id="username" class="form-control input-sm" placeholder="Username"
+			    				<input type="text" name="username" onkeyup="validate(this.value)" id="username" class="form-control input-sm" placeholder="Username"
 			    				value="<?php echo isset($username) ? $username : ''; ?>">
 
 			    				<?php 
@@ -199,6 +198,7 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
 			    			</div>
 
 			    			<div class="form-group">
+			    				<span id="Merror"></span>
 			    				<input type="tel" name="mobile" id="mobile" class="form-control input-sm" placeholder="Mobile Number"
 			    				value="<?php echo isset($mobile) ? $mobile : ''; ?>" onkeyup="validateMobile()">
 			    				<?php 
@@ -320,24 +320,28 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
 
 		});
 
-		// $("#username").blur(function(){
-		// 	$("#Uerror").html(" ");
-		// });
+		$("#username").blur(function(){
+			$("#Uerror").html(" ");
+		});
 		
 	}
 
 	
 
 	function validateMobile(){
-		var mobile = document.getElementById("mobile").value;
+		var mobile = $("#mobile").val();
 		var phoneno = /^[1-9]{1}[0-9]{9}$/;
 		console.log(mobile);
 
 		if((mobile.match(phoneno))){
-			console.log("Valid");
+			$("#Merror").html("Valid Mobile Number");
 		} else{
-			console.log("Invalid");
+			$("#Merror").html("Invalid Mobile Number");
 		}
+
+		$("#mobile").blur(function(){
+			$("#Merror").html(" ");
+		});
 
 	}
 

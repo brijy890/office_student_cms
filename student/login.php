@@ -1,10 +1,7 @@
-<?php session_start(); ?>
 <?php include '../inc/db.php';?>
 <?php include '../inc/function.php';?>
 <?php checkConnection();?>
-
 <?php studentLogin();?>
-
 <?php include '../inc/header.php';?>
 
 <nav class="navbar navbar-inverse">
