@@ -13,15 +13,7 @@ if (isset($_SESSION['username'])) {
 
 <?php
 
-if (isset($_GET['q'])) {
-	$q = $_GET['q'];
-} else{
-	$q = 3;
-}
-
-// $per_page = 3;
-
-$per_page = $q;
+$per_page = 2;
 
 if (isset($_GET['page'])) {
 
@@ -37,12 +29,6 @@ $page_1 = 0;
 } else {
 $page_1 = ($page * $per_page) - $per_page;
 }
-
-// $student_count_query = "SELECT * FROM student_users";
-// $student_query = mysqli_query($connection, $student_count_query);
-// $count = mysqli_num_rows($student_query);
-
-// $count = ceil($count / $per_page);
 
 ?>
 

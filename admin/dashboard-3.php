@@ -10,19 +10,6 @@ if (isset($_SESSION['username'])) {
 }
 ?>
 
-<?php
-
-$per_page = 2;
-
-$count = "SELECT COUNT(id) FROM student_users";
-$count = mysqli_query($connection, $count);
-$count = mysqli_fetch_row($count);
-$count = $count[0];
-
-$count = ceil($count / $per_page);
-
-?>
-
 <nav class="navbar navbar-inverse">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -48,24 +35,6 @@ $count = ceil($count / $per_page);
 
 <div id="target"></div>
 
-  <ul class="pager" id="pagination">
-
-
-            <?php
-
-            for ($i=1; $i <=$count ; $i++) {
-
-                if ($i == $page) {
-                	// $page = $i;
-                     echo "<li  id='{$i}'><a  class='active_link' href='dashboard-2.php?page={$i}'>{$i}</a></li>";
-                 } else{
-                	// $page = $i;
-                     echo "<li id='{$i}'><a href='dashboard-2.php?page={$i}'>{$i}</a></li>";
-                 }  
-            }
-            ?>
-
-  </ul>
 </div>
 
 <script type="text/javascript">
@@ -73,11 +42,9 @@ $count = ceil($count / $per_page);
 
 	$(document).ready(function(){
 
-		$("li#1 a").addClass('active_link');
-
 		$.ajax({
 				type: "post",
-				url: "../admin/pagination-2.php?page=1",
+				url: "../admin/pagination-3.php?page=1&q=3",
 				dataType: "html",                 
 				success: function(data) {
 				$("#target").html(data);
@@ -86,28 +53,8 @@ $count = ceil($count / $per_page);
 			});
 
 	});
+	
 
-	$("#pagination li").click(function(e){
-			e.preventDefault();
-			var pageNum = this.id;
-			console.log(pageNum);
-
-			$("li a").removeClass('active_link');
-
-			$("li#"+pageNum+" a").addClass('active_link');
-
-
-			$.ajax({
-				type: "post",
-				url: "../admin/pagination-2.php?page="+pageNum,
-				dataType: "html",                 
-				success: function(data) {
-
-				$("#target").html(data);
-				}
-
-			});
-		});
 
 </script>
 
