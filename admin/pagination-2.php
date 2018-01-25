@@ -1,9 +1,4 @@
-
-
 <?php include '../inc/db.php';?>
-
-<?php include '../inc/header.php';?>
-
 <?php
 if (isset($_SESSION['username'])) {
 	$username = $_SESSION['username'];
@@ -13,7 +8,7 @@ if (isset($_SESSION['username'])) {
 
 <?php
 
-$per_page = 2;
+$per_page = 4;
 
 if (isset($_GET['page'])) {
 

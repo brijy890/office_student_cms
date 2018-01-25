@@ -2,7 +2,7 @@
 
 <?php include '../inc/db.php';?>
 
-<?php include '../inc/header.php';?>
+<?php include_once '../inc/header.php';?>
 
 <?php
 if (isset($_SESSION['username'])) {
@@ -48,6 +48,7 @@ if (isset($_SESSION['username'])) {
 				dataType: "html",                 
 				success: function(data) {
 				$("#target").html(data);
+				$("li#1 a").addClass('active_link');
 				}
 
 			});

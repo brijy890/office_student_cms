@@ -2,8 +2,6 @@
 
 <?php include '../inc/db.php';?>
 
-<?php include '../inc/header.php';?>
-
 <?php
 if (isset($_SESSION['username'])) {
 	$username = $_SESSION['username'];
@@ -60,9 +58,13 @@ $count = ceil($count / $per_page);
 <?php
 
 if (isset($_GET['q'])) {
-	echo "<option value='$q'>{$q}</option>";
+	echo "<option value='$q' selected>{$q}</option>";
 	for($i=1; $i<=5; $i++){
+
+		if($i != $q){
 			echo "<option value='$i'>{$i}</option>";
+		}
+		
 	}
 } else{
 	echo "<option value=''>Select per page</option>";
@@ -164,13 +166,26 @@ if (isset($_GET['q'])) {
 		});
 
 
+  	var pageNum;
+	$("#pagination li").click(function(e){
+		e.preventDefault();
+		pageNum = this.id;
+	});
+
+
 	$("#perPage").change(function(){
 		var perPage = $("#perPage").val();
-		var pageNum = 1;
+		// var pageNum = $("#pagination li").val();
 		// $("#pagination li").click(function(e){
 		// 	e.preventDefault();
 		// 	pageNum = this.id;
 		// });
+
+		if (!pageNum) {
+			pageNum = 1;
+		}
+
+
 		
 		
 

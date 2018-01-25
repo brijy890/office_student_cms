@@ -147,7 +147,7 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
 			    			
 			    			<div class="form-group">
 			    				<span id="Uerror"></span>
-			    				<input type="text" name="username" onkeyup="validate(this.value)" id="username" class="form-control input-sm" placeholder="Username"
+			    				<input type="text" name="username" id="username" onkeyup="validateUsername(this.value)" class="form-control input-sm validate" placeholder="Username" 
 			    				value="<?php echo isset($username) ? $username : ''; ?>">
 
 			    				<?php 
@@ -185,17 +185,18 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
 
 			    			</div>
 
-			    			<div class="form-group">
-			    				<input type="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address"
-			    				value="<?php echo isset($email) ? $email : ''; ?>">
-			    				<?php 
+<div class="form-group">
+	<span id="Eerror"></span>
+	<input type="email" name="email" id="email" class="form-control input-sm validate" placeholder="Email Address"
+	value="<?php echo isset($email) ? $email : ''; ?>">
+	<?php 
 
-			    				if(isset($error['email'])){
-			    					echo "<p class='alert alert-info'>{$error['email']}</p>";
-			    				}
-			    	
-			    				?>
-			    			</div>
+	if(isset($error['email'])){
+		echo "<p class='alert alert-info'>{$error['email']}</p>";
+	}
+
+	?>
+</div>
 
 			    			<div class="form-group">
 			    				<span id="Merror"></span>
@@ -303,18 +304,75 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
 
 <script>
 	
-	function validate(username){
+	// $(document).ready(function(){
+
+	// 	$(".validate").keyup(function(){
+
+	// 		var username 	= $("#username").val();
+	// 		var email 		= $("#email").val();
+
+	// 		console.log(username);
+	// 		console.log(email);
+
+	// 		if (username) {
+
+	// 		}
+
+	// 		$.ajax({
+	// 		type: "get",
+	// 		cache: "false",
+	// 		if (username) {
+	// 			url: "../admin/user.php?username"+username,
+	// 		} else{
+	// 			url: "../admin/user.php?email"+email,
+	// 		}
+	// 		dataType: "json",                 
+	// 		success: function(data) {
+	// 		console.log(data);
+	// 		// if (data == 0) {
+	// 		// $("#Uerror").html("Valid username");
+	// 		// $("#username").blur(function(){
+	// 		// $(this).val(username);
+	// 		// });
+	// 		// } else{
+	// 		// $("#Uerror").html("This username already exists");
+	// 		// $("#username").blur(function(){
+	// 		// $(this).val("");
+	// 		// });
+	// 		// }
+	// 		}
+
+	// 		});
+
+	// 	});
+
+	// });
+
+
+
+
+
+
+	function validateUsername(username){
+		console.log(username);
 
 		$.ajax({
 			type: "get",
+			cache: "false",
 			url: "../admin/user.php?username="+username,
 			dataType: "json",                 
 			success: function(data) {
-			console.log(data);
+				console.log(data);
 			if (data == 0) {
 				$("#Uerror").html("Valid username");
+					$("#username").blur(function(){
+						$(this).val(username);
+					});
 			} else{
 				$("#Uerror").html("This username already exists");
+					$("#username").blur(function(){
+						$(this).val("");
+					});
 			}
 			}
 
@@ -325,6 +383,72 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
 		});
 		
 	}
+
+	$("#email").keyup(function(){
+
+		var email = $(this).val();
+		console.log(email);
+
+		$.ajax({
+			type: "get",
+			url: "../admin/user.php?email="+email,
+			dataType: "json",                 
+			success: function(data) {
+				console.log(data);
+			if (data == 0) {
+				$("#Eerror").html("Valid email");
+					$("#email").blur(function(){
+						$("#email").val(email);
+					});
+			} else{
+				$("#Eerror").html("This email already exists");
+					$("#email").blur(function(){
+						$("#email").val("");
+					});
+			}
+			}
+
+		});
+
+		$("#email").blur(function(){
+			$("#Eerror").html(" ");
+		});
+
+	});
+
+
+
+
+	// function validateEmail(){
+	// 	console.log(email);
+
+	// 	$.ajax({
+	// 		type: "post",
+	// 		url: "../admin/user.php?email="+email,
+	// 		dataType: "json",                 
+	// 		success: function(data) {
+	// 			console.log(data);
+	// 		if (data == 0) {
+	// 			$("#Eerror").html("Valid email");
+	// 				// $("#Eerror").blur(function(){
+	// 				// 	$(this).val(email);
+	// 				// });
+	// 		} else{
+	// 			$("#Eerror").html("This email already exists");
+	// 				// $("#Eerror").blur(function(){
+	// 				// 	$(this).val("");
+	// 				// });
+	// 		}
+	// 		}
+
+	// 	});
+
+	// 	$("#username").blur(function(){
+	// 		$("#Uerror").html(" ");
+	// 	});
+		
+	// }
+
 
 	
 

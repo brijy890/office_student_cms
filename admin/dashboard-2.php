@@ -12,7 +12,7 @@ if (isset($_SESSION['username'])) {
 
 <?php
 
-$per_page = 2;
+$per_page = 4;
 
 $count = "SELECT COUNT(id) FROM student_users";
 $count = mysqli_query($connection, $count);
