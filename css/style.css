@@ -1,23 +1,15 @@
 body{
     background-color: #525252;
 }
-/*.centered-form{
-	margin-top: 60px;
-	margin-right: 60px !important;
-	margin-left: 60px !important;
-	
-}*/
-
-/*.centered-form .panel{
-	background: rgba(255, 255, 255, 0.8);
-	box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
-}*/
 
 .pager .active_link{
 	background-color: #337ab7 !important;
 	color: #fff !important;
 }
 
+.vertical-offset-100{
+    padding-top:100px;
+}
 
 
 

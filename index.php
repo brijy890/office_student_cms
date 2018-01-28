@@ -1,51 +1,90 @@
-<?php include './inc/header.php';?>
 
-<div id="data">
+<?php include '../inc/db.php';?>
+<?php
+
+if (isset($_POST['Login'])) {
+
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+
+	$password = md5($password);
+
+	$query = "SELECT * FROM admin WHERE username = '{$username}' AND password = '{$password}' ";
+
+	$query_count = mysqli_query($connection, $query);
+
+	header("Location: index-2.php");
+	
+
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sudent-CMS</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<script src="http://mymaplist.com/js/vendor/TweenLite.min.js"></script>
+<!-- This is a very simple parallax effect achieved by simple CSS 3 multiple backgrounds, made by http://twitter.com/msurguy -->
+
+<style type="text/css">
+
+	body{
+		background: url("../images/pexels-photo-802959(1).jpeg") center center no-repeat;
+	}
+
+	.panel-default{
+		display: none;
+	}
+</style>
+</head>
+<body>
 
 <div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="jumbotron text-center">
-				<h1 class="display-6">Welcome Student</h1>
-				<p class="lead">This is Student CMS system</p>
-				<hr class="my-4">
-				<p></p>
-				<p class="lead">
-				
-
-				<?php
-
-				if (isset($_SESSION['student_username'])) {
-					echo "<a class='btn btn-info btn-lg' href='./student/dashboard.php?student_id= {$_SESSION['student_id']}' role='button'>Register</a>";
-
-				} else if(isset($_SESSION['username'])){
-					echo "<a class='btn btn-info btn-lg' href='./admin/dashboard.php' role='button'>Register</a>";
-
-				} else{
-					echo "<a class='btn btn-info btn-lg' href='./student/register.php' id='register'  role='button'>Register</a>";
-				}
-
-				?>
-
-				<?php
-
-				if (isset($_SESSION['student_username'])) {
-					echo "<a class='btn btn-info btn-lg' href='./student/dashboard.php?student_id= {$_SESSION['student_id']}'' role='button'>Login</a>";
-				} else if(isset($_SESSION['username'])){
-					echo "<a class='btn btn-info btn-lg' href='./admin/dashboard.php' role='button'>Login</a>";
-				} else{
-					echo "<a class='btn btn-info btn-lg'  href='./student/login.php' id='login' role='button'>Login</a>";
-				}
-
-
-				?>
-
-				</p>
-				</div>
+    <div class="row vertical-offset-100">
+    	<div class="col-md-4 col-md-offset-4">
+    		<div class="panel panel-default">
+			  	<div class="panel-heading">
+			    	<h3 class="panel-title text-center">Please sign in</h3>
+			 	</div>
+			  	<div class="panel-body">
+			    	<form accept-charset="UTF-8" role="form" action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
+                    <fieldset>
+			    	  	<div class="form-group">
+			    		    <input class="form-control" placeholder="Username" name="username" type="text">
+			    		</div>
+			    		<div class="form-group">
+			    			<input class="form-control" placeholder="Password" name="password" type="password" value="">
+			    		</div>
+			    		<input class="btn btn-lg btn-info btn-block" type="submit" value="Login" name="Login">
+			    	</fieldset>
+			      	</form>
+			    </div>
 			</div>
 		</div>
+	</div>
 </div>
 
-</div>
+<script src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	
+	$(function(){
+
+			$(".panel-default").fadeIn(4000);
 		
-<?php include './inc/footer.php';?>
+	});
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
