@@ -12,9 +12,6 @@
 	<link rel="stylesheet" href="/css/style.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="../css/bootstrap.css">
-	<script src="../js/jquery-3.3.1.js"></script>
-	<script src="../js/bootstrap.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></script>
 </head>
 <body>
 
@@ -39,7 +36,7 @@
 
 		if (isset($_SESSION['username'])) {
 
-				if($_SERVER['PHP_SELF'] == "/admin/dashboard.php" || $_SERVER['PHP_SELF'] == "/admin/detail_dashboard.php" || $_SERVER['PHP_SELF'] == "/admin/users_records.php"){
+				if($_SERVER['PHP_SELF'] == "/admin/dashboard.php" || $_SERVER['PHP_SELF'] == "/admin/dashboard-2.php" || $_SERVER['PHP_SELF'] == "/admin/dashboard-3.php" || $_SERVER['PHP_SELF'] == "/admin/detail_dashboard.php" || $_SERVER['PHP_SELF'] == "/admin/users_records.php"){
 				echo "
 				<ul class='nav navbar-nav pull-right'>
 					<li class='nav-item dropdown'>

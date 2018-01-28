@@ -130,6 +130,5 @@ if (isset($_GET['change_to_student'])) {
             ?>
   </ul>
 
-</body>
-</html>
+<?php include '../inc/footer.php';?>
 

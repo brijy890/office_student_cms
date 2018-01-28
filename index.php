@@ -47,42 +47,5 @@
 </div>
 
 </div>
-
-<!-- <script>
-	
-	$( document ).ready(function() {
-
-     var login = $("#login");
-     login.click(function(){
-
-     		$.ajax({
-			type: "get",
-			url: "../student/login.php",
-			dataType: "html",                 
-			success: function(data) {
-			$("#data").html(data);
-			}
-
-		});
-     });
-
-
-     var register = $("#register");
-     register.click(function(){
-
-     		$.ajax({
-			type: "get",
-			url: "../student/register.php",
-			dataType: "html",                 
-			success: function(data) {
-			console.log(data);
-			$("#data").html(data);
-			}
-		});
- 
-     });
-});
-
-</script> -->
 		
 <?php include './inc/footer.php';?>

@@ -1,7 +1,3 @@
-
-
-<?php include '../inc/db.php';?>
-
 <?php include '../inc/header.php';?>
 
 <?php
@@ -98,6 +94,4 @@ $count = ceil($count / $per_page);
             ?>
   </ul>
 </div>
-
-</body>
-</html>
+<?php include '../inc/footer.php';?>

@@ -1,5 +1,4 @@
 
-
 <?php include '../inc/db.php';?>
 
 <?php
@@ -141,6 +140,8 @@ if (isset($_GET['q'])) {
             ?>
 
   </ul>
+
+  <?php include '../inc/footer.php';?>
 
   <script type="text/javascript">
 
