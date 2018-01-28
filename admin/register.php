@@ -76,4 +76,4 @@ if(isset($_POST['register'])){
     	</div>
     </div>
 
-<?php '../inc/footer.php';?>
+<?php include '../inc/footer.php';?>

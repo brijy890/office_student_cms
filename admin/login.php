@@ -114,5 +114,4 @@
 
     </script>
 
-</body>
-</html>
+<?php include '../inc/footer.php';?>
