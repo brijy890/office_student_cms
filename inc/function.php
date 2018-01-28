@@ -1,6 +1,4 @@
-<?php session_start(); ?>
-<?php include('./inc/db.php'); ?>
-<?php include '../inc/class_student.php'; ?>
+<?php include '../inc/student.php'; ?>
 
 <?php 
 
@@ -46,13 +44,17 @@ function studentLogin(){
 // admin registration
 function adminRegister($username, $password, $role){
 
-	global $connection;
-	$query		= "INSERT INTO admin (username, password, role) VALUES ('{$username}', '{$password}', '{$role}')";
-	$register_admin_query = mysqli_query($connection, $query);
+	// global $connection;
+	// $query		= "INSERT INTO admin (username, password, role) VALUES ('{$username}', '{$password}', '{$role}')";
+	// $register_admin_query = mysqli_query($connection, $query);
 
-	confirmedQuery($register_admin_query);
+	// confirmedQuery($register_admin_query);
 
-	redirect('../');
+	// redirect('../');
+
+	$admin = new Admin($username, $password, $role);
+	// $admin->setAdmin($username, $password, $role);
+	$admin->registerAdmin();
 }
 
 

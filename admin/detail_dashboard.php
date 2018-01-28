@@ -3,10 +3,6 @@
 
 <?php 
 
-if (isset($_SESSION['username'])) {
-	$username = $_SESSION['username'];
-}
-
 if (isset($_GET['page'])) {
 	$page = $_GET['page'];
 }
@@ -90,6 +86,4 @@ if (isset($_GET['page'])) {
   <a href="./dashboard.php?page=<?php echo $page;?>" class="btn btn-info">Back</a>
 </div>
 
-</body>
-</html>
-
+<?php include '../inc/footer.php';?>

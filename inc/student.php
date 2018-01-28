@@ -3,6 +3,43 @@
 <?php include './function.php';?>
 <?php 
 
+
+class Admin {
+
+		private $username;
+		private $password;
+		private $role;
+
+		function __construct($username, $password, $role){
+
+			$this->username = $username;
+			$this->password = $password;
+			$this->role     = $role;
+
+		}
+
+		// public function setAdmin($username, $password, $role){
+
+		// 	$this->username = $username;
+		// 	$this->password = $password;
+		// 	$this->role     = $role;
+		// }
+
+		public function registerAdmin(){
+
+			global $connection;
+			$query		= "INSERT INTO admin (username, password, role) VALUES ('{$this->username}', '{$this->password}', '{$this->role}')";
+			$register_admin_query = mysqli_query($connection, $query);
+
+			confirmedQuery($register_admin_query);
+
+			redirect('../');
+		}
+
+		
+
+}
+
 class Student {
 
 		function studentLogin($username, $password){
@@ -32,7 +69,7 @@ class Student {
 		header("Location:". "../student/dashboard.php?student_id= {$db_id}");
 
 		} else {
-		header("Location:". "../index.php");
+		header("Location:". "../");
 
 		}
 	}

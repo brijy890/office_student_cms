@@ -87,7 +87,5 @@
   </table>
   <a href="edit.php?student_id=<?php echo $_SESSION['student_id']?>" class="btn btn-primary">Edit</a>
 </div>
-
-</body>
-</html>
+<?php include '../inc/footer.php';?>
 

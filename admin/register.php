@@ -1,4 +1,6 @@
+
 <?php include '../inc/header.php'; ?>
+
 
 <?php 
 
@@ -74,5 +76,4 @@ if(isset($_POST['register'])){
     	</div>
     </div>
 
-</body>
-</html>
+<?php '../inc/footer.php';?>

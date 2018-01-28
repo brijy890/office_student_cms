@@ -28,11 +28,19 @@ $page_1 = ($page * $per_page) - $per_page;
 
 $student_count_query = "SELECT * FROM student_users";
 $student_query = mysqli_query($connection, $student_count_query);
-$count = mysqli_num_rows($student_query);
+$row_count = mysqli_num_rows($student_query);
 
-$count = ceil($count / $per_page);
-
+$count = ceil($row_count / $per_page);
 ?>
+
+
+<?php
+
+if ($row_count <= 0) {
+  echo "<h1 class='text-center'>No records</h1>";
+} else{
+  ?>
+
 
 <div class="container">
 <h2 class="text-center">Students Records</h2>      
@@ -94,4 +102,7 @@ $count = ceil($count / $per_page);
             ?>
   </ul>
 </div>
+
+<?php } ;?>
+
 <?php include '../inc/footer.php';?>
