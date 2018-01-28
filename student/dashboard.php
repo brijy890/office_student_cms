@@ -1,40 +1,4 @@
-<?php include '../inc/db.php';?>
 <?php include '../inc/header.php';?>
-
-<?php 
-
-if (isset($_SESSION['student_username'])) {
-	$student_username = $_SESSION['student_username'];
-
-	if ($_SESSION['student_image']) {
-	$image = $_SESSION['student_image'];
-	}
-}
-
-?> 
-
-
-
-<nav class="navbar navbar-inverse">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<a class="navbar-brand" href="../index.php">Student-CMS</a>
-		</div>
-		<ul class="nav navbar-nav">
-			<li class="active"><a href="/">Home</a></li>
-		</ul>
-
-		<ul class="nav navbar-nav pull-right">
-
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="./admin/login_form.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span><img width='15' src="<?php echo"../images/$image";?>"></span> <?php echo $student_username; ?></a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="./logout.php">Logout</a>
-					</div>
-				</li> 
-		</ul>
-	</div>
-</nav>
 
 
 <div class="container">

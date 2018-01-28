@@ -38,28 +38,6 @@ $count = ceil($count / $per_page);
 
 ?>
 
-
-<nav class="navbar navbar-inverse">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<a class="navbar-brand" href="../index.php">Student-CMS</a>
-		</div>
-		<ul class="nav navbar-nav">
-			<li class="active"><a href="/">Home</a></li>
-		</ul>
-
-		<ul class="nav navbar-nav pull-right">
-
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class='glyphicon glyphicon-user'></span> <?php echo $username; ?></a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="./logout.php">Logout</a>
-					</div>
-				</li> 
-		</ul>
-	</div>
-</nav>
-
 <div class="container">
 <h2 class="text-center">Students Records</h2>      
   <table class="table table-striped table-bordered">
