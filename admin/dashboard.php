@@ -26,9 +26,15 @@ $page_1 = 0;
 $page_1 = ($page * $per_page) - $per_page;
 }
 
-$student_count_query = "SELECT * FROM student_users";
-$student_query = mysqli_query($connection, $student_count_query);
-$row_count = mysqli_num_rows($student_query);
+// $student_count_query = "SELECT * FROM student_users";
+// $student_query = mysqli_query($connection, $student_count_query);
+// $row_count = mysqli_num_rows($student_query);
+
+$query = "SELECT COUNT(*) as count FROM student_users";
+$result = mysqli_query($connection, $query);
+while ($row = mysqli_fetch_assoc($result)) {
+  $row_count = $row['count'];
+}
 
 $count = ceil($row_count / $per_page);
 ?>

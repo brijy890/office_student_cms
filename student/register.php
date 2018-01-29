@@ -25,7 +25,9 @@ if(isset($_POST['submit'])){
 
 	$age = $date - $dob;
 
-	move_uploaded_file($user_image_temp, "../images/$user_image");
+	move_uploaded_file($user_image_temp, "../images/users/$user_image");
+
+	exit;
 
 	$error = [
 		'username' 			=>	'',
@@ -147,18 +149,18 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
 
 			    			</div>
 
-<div class="form-group">
-	<span id="Eerror"></span>
-	<input type="email" name="email" id="email" class="form-control input-sm validate" placeholder="Email Address"
-	value="<?php echo isset($email) ? $email : ''; ?>">
-	<?php 
+							<div class="form-group">
+								<span id="Eerror"></span>
+								<input type="email" name="email" id="email" class="form-control input-sm validate" placeholder="Email Address"
+								value="<?php echo isset($email) ? $email : ''; ?>">
+								<?php 
 
-	if(isset($error['email'])){
-		echo "<p class='alert alert-info'>{$error['email']}</p>";
-	}
+								if(isset($error['email'])){
+									echo "<p class='alert alert-info'>{$error['email']}</p>";
+								}
 
-	?>
-</div>
+								?>
+							</div>
 
 			    			<div class="form-group">
 			    				<span id="Merror"></span>
@@ -265,3 +267,23 @@ studentResgister($username, $first_name, $last_name, $email, $mobile, $address, 
     </div>
 
 <?php include '../inc/footer.php';?>
+
+<!-- <script>
+	
+	$(function(){
+		
+		$( "form" ).submit(function( event ) {
+		
+		var input = $( this ).serializeArray();
+		console.log(input);
+
+		var username = $(input[0]);
+		if (username[value = '']) {
+			alert("username cannot be blank");
+		}
+		console.log(username);
+		event.preventDefault();
+		});
+
+	});
+</script> -->

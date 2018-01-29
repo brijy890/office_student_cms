@@ -11,6 +11,16 @@ body{
     padding-top:100px;
 }
 
+h2.product-name{
+	text-transform: uppercase;
+}
+
+.hover{
+	opacity: 0.6;
+}
+
+
+
 
 
 
