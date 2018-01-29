@@ -10,7 +10,7 @@
 
 <?php
 
-$per_page = 12;
+$per_page = 6;
 
 if (isset($_GET['page'])) {
 
@@ -85,36 +85,30 @@ $count = ceil($row_count / $per_page);
 <div class="grid-container outline">
    
     <div class="row">
-        <div class="col-2">
-        	<img src="../images/products/250x250/pexels-photo-90946.jpeg" alt="">
-        	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident labore deleniti, perferendis pariatur minima quasi optio dolores possimus eaque autem nisi fuga amet voluptatem vero odio itaque ipsa aut unde?</p>
-        </div> 
-        
-        <div class="col-2">
-        	<img src="../images/products/250x250/pexels-photo-90946.jpeg" alt="">
-        	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident labore deleniti, perferendis pariatur minima quasi optio dolores possimus eaque autem nisi fuga amet voluptatem vero odio itaque ipsa aut unde?</p>
-        </div>
 
-        <div class="col-2">
-        	<img src="../images/products/250x250/pexels-photo-90946.jpeg" alt="">
-        	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident labore deleniti, perferendis pariatur minima quasi optio dolores possimus eaque autem nisi fuga amet voluptatem vero odio itaque ipsa aut unde?</p>
-        </div>
+
+        <?php
+
+                $query = "SELECT * FROM product LIMIT $page_1, $per_page";
+                $execute_equery = mysqli_query($connection, $query);
+
+                while ($row = mysqli_fetch_assoc($execute_equery)) {
+                $pid    = $row['id'];
+                $pimage = $row['pimage'];
+                $pname  = $row['pname'];
+                $pdesc  = $row['pdesc'];
+
+
+
+                echo "
+                    <div class='col-2 text-center'>
+                    <img src='../images/products/250x250/$pimage' alt='$pname'>
+                    <p>$pname</p>
+                    </div> ";
+
+                    }
+        ?>
     </div> 
-
-    <div class="row">
-        <div class="col-2">
-        	<img src="../images/products/250x250/pexels-photo-90946.jpeg" alt="">
-        </div> 
-        
-        <div class="col-2">
-        	<img src="../images/products/250x250/pexels-photo-90946.jpeg" alt="">
-        </div>
-
-        <div class="col-2">
-        	<img src="../images/products/250x250/pexels-photo-90946.jpeg" alt="">
-        </div>
-    </div> 
-
 </div>
 	
 
@@ -126,10 +120,10 @@ $count = ceil($row_count / $per_page);
 
                 if ($i == $page) {
                 	// $page = $i;
-                     echo "<li><a class='active_link' href='product.php?page={$i}'>{$i}</a></li>";
+                     echo "<li><a class='active_link' href='product-2.php?page={$i}'>{$i}</a></li>";
                  } else{
                 	// $page = $i;
-                     echo "<li><a href='product.php?page={$i}'>{$i}</a></li>";
+                     echo "<li><a href='product-2.php?page={$i}'>{$i}</a></li>";
                  }  
             }
             ?>

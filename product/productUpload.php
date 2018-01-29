@@ -6,8 +6,8 @@
 
 if(isset($_POST['uplaod'])){
 	
-	$pname				= trim($_POST['pname']);
-	$pdesc 				= trim($_POST['pdesc']);
+	$pname	= trim($_POST['pname']);
+	$pdesc 	= trim($_POST['pdesc']);
 
 	if(isset($_FILES['pimage'])){
 		$errors		= array();
@@ -28,13 +28,19 @@ if(isset($_POST['uplaod'])){
 		}
 
 		if(empty($errors)==true){
+
 			move_uploaded_file($file_tmp,"../images/products/original/".$file_name);
 			
 			make_thumb('../images/products/original/'.$file_name, '../images/products/250x250/'.$file_name, 250);
 			make_thumb('../images/products/original/'.$file_name, '../images/products/300x300/'.$file_name, 300);
 			make_thumb('../images/products/original/'.$file_name, '../images/products/650x500/'.$file_name, 650);
 			$query = "INSERT INTO product (pname, pdesc, pimage) VALUES ('{$pname}', '{$pdesc}', '{$file_name}')";
+
 			$execute_query = mysqli_query($connection, $query);
+
+			if (!$execute_query) {
+				die("Failed". mysqli_error($connection));
+			}
 			header("Location: ../product/product.php");
 		}
 	}

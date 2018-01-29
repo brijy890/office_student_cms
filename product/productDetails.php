@@ -1,5 +1,5 @@
 <?php include '../inc/header.php';?>
-<?php include '../inc/db.php';?>
+
 
 
 <?php 
@@ -21,7 +21,7 @@ $query = "SELECT * FROM product WHERE id = '{$pid}' ";
 <div class="container">
 	<div class="row">
 		<div class="col-md-6">
-			<img src="../images/products/original/<?php echo $pimage;?>" alt="<?php echo $pname;?>">
+			<img src="../images/products/650x500/<?php echo $pimage;?>" alt="<?php echo $pname;?>">
 		</div>
 
 		<div class="col-md-6">
