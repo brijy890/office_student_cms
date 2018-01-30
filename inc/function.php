@@ -445,3 +445,14 @@ function mmake_thumb_2($field_name, $target_folder, $file_name, $thumb = TRUE, $
         return false;
     }
 }
+
+
+function delete_image($image_name){
+
+			echo $image_name;
+
+			unlink("../images/products/original/".$image_name);
+			unlink("../images/products/250x250/".$image_name);
+			unlink("../images/products/300x300/".$image_name);
+			unlink("../images/products/650x500/".$image_name);
+}
