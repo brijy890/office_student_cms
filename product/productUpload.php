@@ -8,6 +8,7 @@ if(isset($_POST['uplaod'])){
 	
 	$pname	= trim($_POST['pname']);
 	$pdesc 	= trim($_POST['pdesc']);
+	$price  = trim($_POST['price']);
 
 	if(isset($_FILES['pimage'])){
 		$errors		= array();
@@ -29,19 +30,28 @@ if(isset($_POST['uplaod'])){
 
 		if(empty($errors)==true){
 
+			$file_name = uniqid();
+			$file_name = $file_name . "." . $file_ext;
+
 			move_uploaded_file($file_tmp,"../images/products/original/".$file_name);
 			
 			make_thumb('../images/products/original/'.$file_name, '../images/products/250x250/'.$file_name, 250);
 			make_thumb('../images/products/original/'.$file_name, '../images/products/300x300/'.$file_name, 300);
 			make_thumb('../images/products/original/'.$file_name, '../images/products/650x500/'.$file_name, 650);
-			$query = "INSERT INTO product (pname, pdesc, pimage) VALUES ('{$pname}', '{$pdesc}', '{$file_name}')";
+
+			// mmake_thumb_2($file_name, '../images/products/original/'.$file_name, '', $thumb = TRUE, '../images/products/250x250/'.$file_name, 250, 250);
+
+
+
+
+			$query = "INSERT INTO product (pname, pdesc, pimage, price) VALUES ('{$pname}', '{$pdesc}', '{$file_name}', '{$price}')";
 
 			$execute_query = mysqli_query($connection, $query);
 
 			if (!$execute_query) {
 				die("Failed". mysqli_error($connection));
 			}
-			header("Location: ../product/product.php");
+			header("Location: ../product/product-2.php");
 		}
 	}
 }
@@ -71,19 +81,23 @@ if(isset($_POST['uplaod'])){
 			    				?>
 			    			</div>
 
+			    			<div class="form-group">
+	    						<input type="text" name="price" placeholder="Enter price" class="form-control">
+	    					</div>
+
 
 			    			<div class="form-group">
-			    					 <label for="comment">Product Description</label>
+			    					 <label for="pdesc">Product Description</label>
   									 <textarea class="form-control" rows="5" id="pdesc" name="pdesc"></textarea>	
 	    					</div>
+
+	    					
 
 	    					<div class="form-group">
 	    						<span class="text-danger">
 	    						<?php 
 
-	    							if (isset($errors['file_ext'])) {
-	    								echo $errors['file_ext'];
-	    							} else if (isset($errors['file_size'])) {
+	    							if (isset($errors['file_size'])) {
 	    								echo $errors['file_size'];
 	    							}
 

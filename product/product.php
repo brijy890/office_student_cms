@@ -26,6 +26,7 @@ $page_1 = ($page * $per_page) - $per_page;
 
 $query = "SELECT COUNT(*) as count FROM product";
 $result = mysqli_query($connection, $query);
+confirmedQuery($result);
 while ($row = mysqli_fetch_assoc($result)) {
   $row_count = $row['count'];
 }
@@ -74,10 +75,8 @@ $count = ceil($row_count / $per_page);
             for ($i=1; $i <=$count ; $i++) {
 
                 if ($i == $page) {
-                	// $page = $i;
                      echo "<li><a class='active_link' href='product.php?page={$i}'>{$i}</a></li>";
                  } else{
-                	// $page = $i;
                      echo "<li><a href='product.php?page={$i}'>{$i}</a></li>";
                  }  
             }
