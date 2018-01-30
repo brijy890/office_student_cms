@@ -10,7 +10,7 @@
 
 <?php
 
-$per_page = 6;
+$per_page = 4;
 
 if (isset($_GET['page'])) {
 
@@ -84,7 +84,7 @@ $count = ceil($row_count / $per_page);
 
 <div class="grid-container outline">
    
-    <div class="row">
+    <!-- <div class="row"> -->
 
 
         <?php
@@ -98,17 +98,31 @@ $count = ceil($row_count / $per_page);
                 $pname  = $row['pname'];
                 $pdesc  = $row['pdesc'];
 
-
-
                 echo "
-                    <div class='col-2 text-center'>
-                    <img src='../images/products/250x250/$pimage' alt='$pname'>
-                    <p>$pname</p>
-                    </div> ";
+
+					<ul class='product-list'>
+						<li>
+							<a href='#'>
+								<img src='../images/products/250x250/$pimage' alt='$pname'>
+							</a>
+							<p>$pname</p>
+						</li>
+					</ul>
+
+
+                ";
+
+
+
+                // echo "
+                //     <div class='col-2 text-center'>
+                //     <img src='../images/products/250x250/$pimage' alt='$pname'>
+                //     <p>$pname</p>
+                //     </div> ";
 
                     }
         ?>
-    </div> 
+    <!-- </div>  -->
 </div>
 	
 
@@ -131,3 +145,4 @@ $count = ceil($row_count / $per_page);
 
 </body>
 </html>
+

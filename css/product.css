@@ -1,10 +1,17 @@
 .grid-container{
         width: 100%; 
         max-width: 1200px;
+        position: relative;
         margin-right: auto;
         margin-left: auto;
         background-color: #f4f4f4;   
     }
+
+
+
+
+
+
 
     /*-- our cleafix hack -- */ 
     .row:before, 
@@ -58,6 +65,14 @@ ul.pager{
   
 }
 
+.pager a{
+  background-color: #f4f4f4 !important;
+  color: #000 !important;
+  padding: 5px 30px;
+  border-radius: 15px;
+  
+}
+
 .text-center{
     text-align: center;
 }
@@ -69,4 +84,9 @@ ul.pager li{
 
 ul.pager li a{
     text-decoration: none;
+}
+
+ul.product-list{
+    list-style: none;
+    display: inline-block;
 }
