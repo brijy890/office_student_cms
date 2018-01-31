@@ -5,9 +5,10 @@
 // Redirect function
 function redirect($location){
 	global $connection;
-	return header("Location:". $location);
+	return header("Location: {$location}");
 }
 
+// To check query excuted successfully or not
 function confirmedQuery($query){
 
 	global $connection;
@@ -44,16 +45,7 @@ function studentLogin(){
 // admin registration
 function adminRegister($username, $password, $role){
 
-	// global $connection;
-	// $query		= "INSERT INTO admin (username, password, role) VALUES ('{$username}', '{$password}', '{$role}')";
-	// $register_admin_query = mysqli_query($connection, $query);
-
-	// confirmedQuery($register_admin_query);
-
-	// redirect('../');
-
 	$admin = new Admin($username, $password, $role);
-	// $admin->setAdmin($username, $password, $role);
 	$admin->registerAdmin();
 }
 
@@ -332,14 +324,222 @@ function  passwordValidate($password, $confirm_password){
 
 
 
+// Delete old image after update
+function delete_image($image_name){
 
-function make_thumb($src, $dest, $desired_width) {
+	unlink("../images/products/original/".$image_name);
+	unlink("../images/products/250x250/".$image_name);
+	unlink("../images/products/300x300/".$image_name);
+	unlink("../images/products/650x500/".$image_name);
+}
+
+
+
+// Upload product
+function upload_product(){
+
+	global $connection;
+
+	if(isset($_POST['uplaod'])){
+
+	$pname	= trim($_POST['pname']);
+	$pdesc 	= trim($_POST['pdesc']);
+	$price  = trim($_POST['price']);
+
+	if(isset($_FILES['pimage'])){
+		
+		$errors = array('file_ext' => '', 'file_size' => '' );
+		$file_name 	= $_FILES['pimage']['name'];
+
+		if ($file_name == '') {
+			$file_name = 'placeholder-image.png';
+
+			$file_type = 'image/png';
+			
+			genarate_thumbnails($file_name, $file_type);
+
+			upload_query($pname, $pdesc, $file_name, $price);
+
+			header("Location: ../product/product-show.php");
+
+
+		} else{
+
+		$file_size 	= $_FILES['pimage']['size'];
+		$file_tmp 	= $_FILES['pimage']['tmp_name'];
+		$file_type	= $_FILES['pimage']['type'];
+		$file_ext	= strtolower(end(explode('.',$_FILES['pimage']['name'])));
+
+		$expensions= array("jpeg","jpg","png");
+
+		if(in_array($file_ext,$expensions) === false){
+			$errors['file_ext'] = "extension not allowed, please choose a JPEG or PNG file.";
+		}
+
+		if($file_size > 2097152){
+			$errors['file_size'] = 'File size must be excately 2 MB';
+		}
+
+
+		if(empty($errors)==true){
+
+			$file_name = uniqid();
+			$file_name = $file_name . "." . $file_ext;
+
+			move_uploaded_file($file_tmp,"../images/products/original/".$file_name);
+			
+			genarate_thumbnails($file_name, $file_type);
+
+			upload_query($pname, $pdesc, $file_name, $price);
+
+			header("Location: ../product/product-show.php");			
+		} else{
+			return $errors;
+		}
+	}
+}
+}
+}
+
+
+ // Get Product Data to show on edit form
+function get_product_data(){
+    
+    global $connection;
+	if (isset($_GET['pid'])) {
+	    $pid = $_GET['pid'];
+	}
+
+
+	$query = "SELECT * FROM product WHERE id = '{$pid}'";
+	$query = mysqli_query($connection, $query);
+	confirmedQuery($query);
+	while ($row = mysqli_fetch_assoc($query)) {
+		$db_pname 		= $row['pname'];
+		$db_pdesc 		= $row['pdesc'];
+		$db_pimage 		= $row['pimage'];
+		$db_price 		= $row['price'];
+	}
+
+	return $product_data = array(
+		'pid' => $pid, 'db_pname' => $db_pname, 'db_pdesc' => $db_pdesc, 'db_pimage' => $db_pimage, 'db_price' => $db_price);
+}
+
+
+
+// Edit product
+function edit_product($pid, $db_pimage){
+
+global $connection;
+
+if(isset($_POST['edit'])){
+
+	$pname	= trim($_POST['pname']);
+	$pdesc 	= trim($_POST['pdesc']);
+	$price  = trim($_POST['price']);
+
+	if(isset($_FILES['pimage'])){
+
+		$errors = array('file_ext' => '', 'file_size' => '' );
+		$file_name 	= $_FILES['pimage']['name'];
+
+		if (empty($file_name)) {
+			$file_name = $db_pimage;
+
+			$query = "UPDATE product SET pname = '{$pname}', pdesc = '{$pdesc}', price = '{$price}', pimage = '{$file_name}' WHERE id = '{$pid}'";
+			$execute_query = mysqli_query($connection, $query);
+
+			confirmedQuery($execute_query);
+
+			if ($db_pimage = 'placeholder-image.png') {
+				// header("Location: ../product/product-show.php");
+				redirect('../product/product-show.php');
+			} else{
+				delete_image($db_pimage);
+				// header("Location: ../product/product-show.php");
+				redirect('../product/product-show.php');
+			}
+
+		} else{
+
+		$file_size 	= $_FILES['pimage']['size'];
+		$file_tmp 	= $_FILES['pimage']['tmp_name'];
+		$file_type	= $_FILES['pimage']['type'];
+		$file_ext	= strtolower(end(explode('.',$_FILES['pimage']['name'])));
+
+		$expensions= array("jpeg","jpg","png");
+
+		if(in_array($file_ext,$expensions)=== false){
+			$errors['file_ext']="extension not allowed, please choose a JPEG or PNG file.";
+		}
+
+		if($file_size > 2097152){
+			$errors['file_size']='File size must be excately 2 MB';
+		}
+
+		foreach ($errors as $key => $value) {
+        
+	        if (empty($value)) {
+
+	            unset($errors[$key]);
+	        } 
+        }
+
+		if(empty($errors)==true){
+
+			$file_name = uniqid();
+			$file_name = $file_name . "." . $file_ext;
+
+			move_uploaded_file($file_tmp,"../images/products/original/".$file_name);
+			
+			genarate_thumbnails($file_name, $file_type);
+
+			$query = "UPDATE product SET pname = '{$pname}', pdesc = '{$pdesc}', price = '{$price}', pimage = '{$file_name}' WHERE id = '{$pid}'";
+
+			$execute_query = mysqli_query($connection, $query);
+
+			confirmedQuery($execute_query);
+
+			if ($db_pimage == 'placeholder-image.png') {
+				// header("Location: ../product/product-show.php");
+				redirect('../product/product-show.php');
+			} else{
+				delete_image($db_pimage);
+				header("Location: ../product/product-show.php");
+
+			}
+		} else{
+			return $errors;
+		}
+	}
+}
+}
+}
+
+
+
+function genarate_thumbnails($file_name, $file_type){
+
+		global $connection;
+		make_thumb('../images/products/original/'.$file_name, '../images/products/250x250/'.$file_name, 250, $file_type);
+		make_thumb('../images/products/original/'.$file_name, '../images/products/300x300/'.$file_name, 300, $file_type);
+		make_thumb('../images/products/original/'.$file_name, '../images/products/650x500/'.$file_name, 650, $file_type);
+}
+
+
+function make_thumb($src, $dest, $desired_width, $file_type) {
 
 	
 	/* read the source image */
-	$source_image = imagecreatefromjpeg($src);
-	$width = imagesx($source_image);
-	$height = imagesy($source_image);
+
+	if ($file_type == 'image/jpeg') {
+		$source_image 	= imagecreatefromjpeg($src);
+	} else if($file_type == 'image/png'){
+		$source_image 	= imagecreatefrompng($src);
+	}
+
+	$width 			= imagesx($source_image);
+	$height 		= imagesy($source_image);
 	
 	/* find the "desired height" of this thumbnail, relative to the desired width  */
 	$desired_height = floor($height * ($desired_width / $width));
@@ -355,104 +555,73 @@ function make_thumb($src, $dest, $desired_width) {
 }
 
 
+// product upload query
+function upload_query($pname, $pdesc, $file_name, $price){
 
-
-
-/**
-*
-* Function Name: cwUpload()
-* $field_name => Input file field name.
-* $target_folder => Folder path where the image will be uploaded.
-* $file_name => Custom thumbnail image name. Leave blank for default image name.
-* $thumb => TRUE for create thumbnail. FALSE for only upload image.
-* $thumb_folder => Folder path where the thumbnail will be stored.
-* $thumb_width => Thumbnail width.
-* $thumb_height => Thumbnail height.
-*
-**/
-function mmake_thumb_2($field_name, $target_folder, $file_name, $thumb = TRUE, $thumb_folder, $thumb_width, $thumb_height){
-
-    //folder path setup
-    $target_path = $target_folder;
-    $thumb_path = $thumb_folder;
-    
-    //file name setup
-    $filename_err = explode(".",$_FILES[$field_name]['name']);
-    $filename_err_count = count($filename_err);
-    $file_ext = $filename_err[$filename_err_count-1];
-    if($file_name != ''){
-        $fileName = $file_name.'.'.$file_ext;
-    }else{
-        $fileName = $_FILES[$field_name]['name'];
-    }
-    
-    //upload image path
-    $upload_image = $target_path.basename($fileName);
-    
-    //upload image
-    if(move_uploaded_file($_FILES[$field_name]['tmp_name'],$upload_image))
-    {
-        //thumbnail creation
-        if($thumb == TRUE)
-        {
-        	
-            $thumbnail = $thumb_path.$fileName;
-            list($width,$height) = getimagesize($upload_image);
-            $thumb_create = imagecreatetruecolor($thumb_width,$thumb_height);
-            switch($file_ext){
-                case 'jpg':
-                    $source = imagecreatefromjpeg($upload_image);
-                    break;
-                case 'jpeg':
-                    $source = imagecreatefromjpeg($upload_image);
-                    break;
-
-                case 'png':
-                    $source = imagecreatefrompng($upload_image);
-                    break;
-                case 'gif':
-                    $source = imagecreatefromgif($upload_image);
-                    break;
-                default:
-                    $source = imagecreatefromjpeg($upload_image);
-
-                    echo $source;
-                    exit;
-            }
-
-            imagecopyresized($thumb_create,$source,0,0,0,0,$thumb_width,$thumb_height,$width,$height);
-            switch($file_ext){
-                case 'jpg' || 'jpeg':
-                    imagejpeg($thumb_create,$thumbnail,100);
-                    break;
-                case 'png':
-                    imagepng($thumb_create,$thumbnail,100);
-                    break;
-
-                case 'gif':
-                    imagegif($thumb_create,$thumbnail,100);
-                    break;
-                default:
-                    imagejpeg($thumb_create,$thumbnail,100);
-            }
-
-        }
-
-        return $fileName;
-    }
-    else
-    {
-        return false;
-    }
+	global $connection;
+	$query = "INSERT INTO product (pname, pdesc, pimage, price) VALUES ('{$pname}', '{$pdesc}', '{$file_name}', '{$price}')";
+	$execute_query = mysqli_query($connection, $query);
+	confirmedQuery($execute_query);
 }
 
 
-function delete_image($image_name){
 
-			echo $image_name;
+// Get pagination
+function getPager($count, $page, $url){
 
-			unlink("../images/products/original/".$image_name);
-			unlink("../images/products/250x250/".$image_name);
-			unlink("../images/products/300x300/".$image_name);
-			unlink("../images/products/650x500/".$image_name);
+	global $connection;
+
+	for ($i=1; $i <=$count ; $i++) {
+
+		if ($i == $page) {
+			echo "<li><a class='active_link' href={$url}?page={$i}'>{$i}</a></li>";
+		} else{
+			echo "<li><a href={$url}?page={$i}'>{$i}</a></li>";
+		}  
+	}
+}
+
+
+// Count no of records in database
+function count_query($tbl_name){
+	global $connection;
+	$query = "SELECT COUNT(*) as count FROM $tbl_name";
+	$result = mysqli_query($connection, $query);
+	confirmedQuery($result);
+	while ($row = mysqli_fetch_assoc($result)) {
+  		$row_count = $row['count'];
+	}
+
+	return $row_count;
+}
+
+
+
+// Pagination
+function pagination_prams($tbl_name){
+
+	global $connection;
+
+	$per_page = 5;
+
+	if (isset($_GET['page'])) {
+
+	$page = $_GET['page'];
+
+	} else {
+
+	$page = "1";
+	}
+
+	if ($page == "" || $page == 1) {
+	$page_1 = 0;
+	} else {
+	$page_1 = ($page * $per_page) - $per_page;
+	}
+
+	$row_count = count_query($tbl_name);
+
+	$count = ceil($row_count / $per_page);
+
+	return $params = array('per_page' => $per_page, 'page_1' => $page_1, 'row_count' => $row_count, 'count' => $count, 'page' => $page );
 }

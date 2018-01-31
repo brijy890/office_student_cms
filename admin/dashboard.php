@@ -7,38 +7,15 @@ if (isset($_SESSION['username'])) {
 ?>
 
 
-<?php
+<?php 
+$params = pagination_prams('student_users');
 
-$per_page = 7;
-
-if (isset($_GET['page'])) {
-
-$page = $_GET['page'];
-
-} else {
-
-$page = "1";
-}
-
-if ($page == "" || $page == 1) {
-$page_1 = 0;
-} else {
-$page_1 = ($page * $per_page) - $per_page;
-}
-
-// $student_count_query = "SELECT * FROM student_users";
-// $student_query = mysqli_query($connection, $student_count_query);
-// $row_count = mysqli_num_rows($student_query);
-
-$query = "SELECT COUNT(*) as count FROM student_users";
-$result = mysqli_query($connection, $query);
-while ($row = mysqli_fetch_assoc($result)) {
-  $row_count = $row['count'];
-}
-
-$count = ceil($row_count / $per_page);
+$per_page 	= $params['per_page'];
+$page_1 	= $params['page_1'];
+$row_count 	= $params['row_count'];
+$count 		= $params['count'];
+$page 		= $params['page'];
 ?>
-
 
 <?php
 
@@ -81,7 +58,7 @@ if ($row_count <= 0) {
 		echo "<td>{$student_id}</td>";
 		echo "<td>{$student_username}</td>";
 		echo "<td><a href='./detail_dashboard.php?s_id=$student_id&page=$page' class='btn btn-primary btn-block'>View</a></td>";
-    echo "</tr>";
+    	echo "</tr>";
 
 	}
   ?>
@@ -89,23 +66,8 @@ if ($row_count <= 0) {
   </table>
 
   <a href="./users_records.php" class="btn btn-default">View Users</a>
-
-
   <ul class="pager">
-
-            <?php
-
-            for ($i=1; $i <=$count ; $i++) {
-
-                if ($i == $page) {
-                	// $page = $i;
-                     echo "<li><a class='active_link' href='dashboard.php?page={$i}'>{$i}</a></li>";
-                 } else{
-                	// $page = $i;
-                     echo "<li><a href='dashboard.php?page={$i}'>{$i}</a></li>";
-                 }  
-            }
-            ?>
+    <?php getPager($count, $page, '../admin/dashboard.php');?>
   </ul>
 </div>
 

@@ -24,9 +24,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index-2.php">Student-CMS</a>
+      <a class="navbar-brand" href="/">Student-CMS</a>
       <a class="navbar-brand" href="../product/product-2.php">Product</a>
-      <a class="navbar-brand" href="../product/productUpload.php">Upload Product</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
@@ -38,7 +37,7 @@
 
 		if (isset($_SESSION['username'])) {
 
-				if($_SERVER['PHP_SELF'] == "/admin/dashboard.php" || $_SERVER['PHP_SELF'] == "/admin/dashboard-2.php" || $_SERVER['PHP_SELF'] == "/admin/dashboard-3.php" || $_SERVER['PHP_SELF'] == "/admin/detail_dashboard.php" || $_SERVER['PHP_SELF'] == "/admin/users_records.php"){
+				if($_SERVER['PHP_SELF'] == "/admin/dashboard.php" || $_SERVER['PHP_SELF'] == "/admin/dashboard-2.php" || $_SERVER['PHP_SELF'] == "/admin/dashboard-3.php" || $_SERVER['PHP_SELF'] == "/admin/detail_dashboard.php" || $_SERVER['PHP_SELF'] == "/admin/users_records.php" || $_SERVER['PHP_SELF'] == "/product/product-show.php"){
 				echo "
 				<ul class='nav navbar-nav pull-right'>
 					<li class='nav-item dropdown'>
@@ -49,6 +48,9 @@
 						<li class='divider'></li>
 
 						<li><a href='#'>Profile <span class='glyphicon glyphicon-user'></span></a></li>
+						<li class='divider'></li>
+
+						<li><a href='../product/product-show.php'>Products <span class='glyphicon glyphicon-tag'></span></a></li>
 						<li class='divider'></li>
 					</ul>
 					</li> 
