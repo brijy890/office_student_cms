@@ -26,6 +26,7 @@
       </button>
       <a class="navbar-brand" href="/">Student-CMS</a>
       <a class="navbar-brand" href="../product/product-2.php">Product</a>
+      <a class="navbar-brand" href="../API/currency.php">API</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">

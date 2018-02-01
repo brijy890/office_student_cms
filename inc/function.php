@@ -1,4 +1,5 @@
 <?php include '../inc/student.php'; ?>
+<?php include '../oops/query.php';?>
 
 <?php 
 
@@ -380,6 +381,13 @@ function upload_product(){
 			$errors['file_size'] = 'File size must be excately 2 MB';
 		}
 
+		foreach ($errors as $key => $value) {
+
+			if (empty($value)) {
+				unset($errors[$key]);
+			}
+		}
+
 
 		if(empty($errors)==true){
 
@@ -410,29 +418,30 @@ function get_product_data(){
 	    $pid = $_GET['pid'];
 	}
 
+	$col 	= array();
+	$params = array('id' => $pid);
+	$db_result = selectQuery('product', $col, $params);
 
-	$query = "SELECT * FROM product WHERE id = '{$pid}'";
-	$query = mysqli_query($connection, $query);
-	confirmedQuery($query);
-	while ($row = mysqli_fetch_assoc($query)) {
-		$db_pname 		= $row['pname'];
-		$db_pdesc 		= $row['pdesc'];
-		$db_pimage 		= $row['pimage'];
-		$db_price 		= $row['price'];
-	}
+	// $query = "SELECT * FROM product WHERE id = '{$pid}'";
+	// $query = mysqli_query($connection, $query);
+	// confirmedQuery($query);
+	// while ($row = mysqli_fetch_assoc($query)) {
+	// 	$db_pname 		= $row['pname'];
+	// 	$db_pdesc 		= $row['pdesc'];
+	// 	$db_pimage 		= $row['pimage'];
+	// 	$db_price 		= $row['price'];
+	// }
 
 	return $product_data = array(
-		'pid' => $pid, 'db_pname' => $db_pname, 'db_pdesc' => $db_pdesc, 'db_pimage' => $db_pimage, 'db_price' => $db_price);
+		'pid' => $db_result['id'], 'db_pname' => $db_result['pname'], 'db_pdesc' => $db_result['pdesc'], 'db_pimage' => $db_result['pimage'], 'db_price' => $db_result['price']);
 }
 
 
 
 // Edit product
 function edit_product($pid, $db_pimage){
-
-global $connection;
-
-if(isset($_POST['edit'])){
+	global $connection;
+	if(isset($_POST['edit'])){
 
 	$pname	= trim($_POST['pname']);
 	$pdesc 	= trim($_POST['pdesc']);
@@ -446,17 +455,14 @@ if(isset($_POST['edit'])){
 		if (empty($file_name)) {
 			$file_name = $db_pimage;
 
-			$query = "UPDATE product SET pname = '{$pname}', pdesc = '{$pdesc}', price = '{$price}', pimage = '{$file_name}' WHERE id = '{$pid}'";
-			$execute_query = mysqli_query($connection, $query);
-
-			confirmedQuery($execute_query);
+			$col = array('pname' => $pname, 'pdesc' => $pdesc, 'pimage' => $file_name, 'price' => $price);
+			$query = new Query();
+			$query->updateQuery('product', $pid, $col);
 
 			if ($db_pimage = 'placeholder-image.png') {
-				// header("Location: ../product/product-show.php");
 				redirect('../product/product-show.php');
 			} else{
 				delete_image($db_pimage);
-				// header("Location: ../product/product-show.php");
 				redirect('../product/product-show.php');
 			}
 
@@ -494,14 +500,11 @@ if(isset($_POST['edit'])){
 			
 			genarate_thumbnails($file_name, $file_type);
 
-			$query = "UPDATE product SET pname = '{$pname}', pdesc = '{$pdesc}', price = '{$price}', pimage = '{$file_name}' WHERE id = '{$pid}'";
-
-			$execute_query = mysqli_query($connection, $query);
-
-			confirmedQuery($execute_query);
+			$col = array('pname' => $pname, 'pdesc' => $pdesc, 'pimage' => $file_name, 'price' => $price);
+			$query = new Query();
+			$query->updateQuery('product', $pid, $col);
 
 			if ($db_pimage == 'placeholder-image.png') {
-				// header("Location: ../product/product-show.php");
 				redirect('../product/product-show.php');
 			} else{
 				delete_image($db_pimage);
@@ -558,10 +561,9 @@ function make_thumb($src, $dest, $desired_width, $file_type) {
 // product upload query
 function upload_query($pname, $pdesc, $file_name, $price){
 
-	global $connection;
-	$query = "INSERT INTO product (pname, pdesc, pimage, price) VALUES ('{$pname}', '{$pdesc}', '{$file_name}', '{$price}')";
-	$execute_query = mysqli_query($connection, $query);
-	confirmedQuery($execute_query);
+	$col = array('pname' => $pname, 'pdesc' => $pdesc, 'pimage' => $file_name, 'price' => $price);
+	$query = new Query();
+	$query->insertQuery('product', $col);
 }
 
 
@@ -623,5 +625,111 @@ function pagination_prams($tbl_name){
 
 	$count = ceil($row_count / $per_page);
 
-	return $params = array('per_page' => $per_page, 'page_1' => $page_1, 'row_count' => $row_count, 'count' => $count, 'page' => $page );
+	return $params = array('per_page' => $per_page, 'page_1' => $page_1, 'row_count' => $row_count, 'count' => $count, 'page' => $page);
 }
+
+
+
+// function insertQuery($table_name, $col){
+
+// 	global $connection;
+
+// 	$last_key 	= end(array_keys($col));
+// 	$last_value = end(array_values($col));
+
+// 	$query = "INSERT INTO {$table_name} (";
+// 	foreach ($col as $key => $value) {
+// 		if($last_key == $key)
+// 		{
+// 			$query .= "{$key}";
+// 		} else{
+// 			$query .= "{$key}, ";
+// 		}	
+// 	}
+// 	$query .= ") ";
+// 	$query .= "VALUES (";
+// 	foreach ($col as $key => $value) {
+// 		if($last_value == $value){
+// 			$query .= " '$value'";
+// 		} else{
+// 			$query .= " '$value',";
+// 		}
+// 	}
+// 	$query .= ");";
+
+// 	$query_execute = mysqli_query($connection, $query);
+
+// 	if(!$query_execute){
+// 		die(mysqli_error($connection));
+// 	}
+// }
+
+
+// function updateQuery($table_name, $pid, $col){
+
+// 	global $connection;
+
+// 	$last_key 	= end(array_keys($col));
+
+// 	$query = "UPDATE {$table_name} SET ";
+// 	foreach ($col as $key => $value) {
+// 		if($last_key == $key){
+// 			$query .= "$key = '$value' ";
+// 		} else{
+// 			$query .= "$key = '$value', ";
+// 		}
+// 	}
+
+// 	$query .= "WHERE id = $pid";
+
+// 	$query_execute = mysqli_query($connection, $query);
+
+// 	if(!$query_execute){
+// 		die(mysqli_error($connection));
+// 	}
+// }
+
+function selectQuery($table_name, $col, $params){
+
+	global $connection;
+
+	// print_r($col);
+	// print_r($params);
+	// echo $table_name;
+
+	if (empty($col) && empty($params)) {
+		$query = "SELECT * FROM {$table_name}";
+	}
+
+	if (empty($col)) {
+		foreach ($params as $key => $value) {
+				$query = "SELECT * FROM {$table_name} WHERE $key = '$value' ";
+		}
+	
+	}
+
+	if (empty($params)) {
+		foreach ($col as $key => $value) {
+			$query = "SELECT {$key} FROM {$table_name}";
+		}
+	}
+
+	if (isset($col) && isset($params)) {
+		foreach ($col as $col_key => $col_value) {
+			foreach ($params as $params_key => $params_value) {
+				$query = "SELECT {$col_key} FROM {$table_name} WHERE $params_key = $params_value";
+			}
+		}
+	}
+
+	$query = mysqli_query($connection, $query);
+	confirmedQuery($query);
+
+	 while ($row = mysqli_fetch_assoc($query)) {
+		$result = $row;
+	}
+
+	return $result;
+
+}
+?>

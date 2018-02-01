@@ -1,5 +1,6 @@
 
 <?php include '../inc/db.php';?>
+<?php include '../inc/function.php';?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,21 +25,16 @@ if (isset($_GET['pid'])) {
 	$pid = $_GET['pid'];
 }
 
-$query = "SELECT * FROM product WHERE id = '{$pid}' ";
-				$execute_equery = mysqli_query($connection, $query);
+$col 	= array();
+$params = array('id' => $pid);
+$db_result = selectQuery('product', $col, $params);
 
-				while ($row = mysqli_fetch_assoc($execute_equery)) {
-				$pimage = $row['pimage'];
-				$pname  = $row['pname'];
-				$pdesc  = $row['pdesc'];
+echo "<div class='product-image'>
+<img src='../images/products/650x500/{$db_result['pimage']}' alt='{$db_result['pname']}'>
+</div>
 
-				echo "<div class='product-image'>
-						<img src='../images/products/650x500/$pimage' alt='$pname'>
-					  </div>
-						
-					  <div class='image-desc'><p>$pdesc</p></div>
+<div class='image-desc'><p>{$db_result['pdesc']}</p></div>
 					  ";
-}
 ?>
 </div>
 
