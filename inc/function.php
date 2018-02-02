@@ -732,4 +732,164 @@ function selectQuery($table_name, $col, $params){
 	return $result;
 
 }
+
+
+
+
+
+function getApi(){
+
+	global $connection;
+
+	if(isset($_POST['submit'])){
+		$currency = $_POST['currency'];
+		$base     = $_POST['base'];
+		$address  = $_POST['address'];
+	}
+
+	if (empty($address)) {
+		$address = 'india';
+	}
+
+	$geo_code = getGeocode($address);
+
+
+	if (empty($base)) {
+	$base = 'USD';
+	}
+
+	if (empty($currency)) {
+	$currency = 100;
+	}
+
+	$url = "https://api.fixer.io/latest?base=".$base;
+
+	$curl = curl_init();
+
+	curl_setopt_array($curl, array(
+
+	CURLOPT_URL => $url,
+
+	CURLOPT_RETURNTRANSFER => true,
+
+	CURLOPT_ENCODING => "",
+
+	CURLOPT_MAXREDIRS => 10,
+
+	CURLOPT_TIMEOUT => 30,
+
+	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+
+	CURLOPT_CUSTOMREQUEST => "GET",
+
+	CURLOPT_POSTFIELDS => "",
+
+	CURLOPT_HTTPHEADER => array(
+
+	"accept: application/json",
+
+	"cache-control: no-cache",
+
+	"content-type: application/json"
+
+	),
+
+	));
+
+
+
+	$response = curl_exec($curl);
+
+	$err = curl_error($curl);
+
+	curl_close($curl);
+
+
+
+	if ($err) {
+
+	echo "cURL Error #:" . $err;
+
+	} else {
+
+
+	$response = json_decode($response);
+
+	$INR = $response->rates->INR;
+
+	$result = number_format(($currency/$INR), 2);
+
+	}
+
+	return $data = array('currency' => $currency, 'result' => $result, 'base' => $base, 'geo_code' => $geo_code);
+}
+
+
+function getGeocode($address){
+
+  global $connection;
+
+
+  $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$address;
+
+  $curl = curl_init();
+
+  curl_setopt_array($curl, array(
+
+  CURLOPT_URL => $url,
+
+  CURLOPT_RETURNTRANSFER => true,
+
+  CURLOPT_ENCODING => "",
+
+  CURLOPT_MAXREDIRS => 10,
+
+  CURLOPT_TIMEOUT => 30,
+
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+
+  CURLOPT_CUSTOMREQUEST => "GET",
+
+  CURLOPT_POSTFIELDS => "",
+
+  CURLOPT_HTTPHEADER => array(
+
+  "accept: application/json",
+
+  "cache-control: no-cache",
+
+  "content-type: application/json"
+
+  ),
+
+  ));
+
+
+
+  $response = curl_exec($curl);
+
+  $err = curl_error($curl);
+
+  curl_close($curl);
+
+
+
+  if ($err) {
+
+  echo "cURL Error #:" . $err;
+
+  } else {
+
+$response = json_decode($response);
+
+$lat = $response->results[0]->geometry->location->lat;
+$lag = $response->results[0]->geometry->location->lng;
+
+  }
+
+  return $geo_code = array('lat' => $lat, 'lag' => $lag);
+
+}
+
 ?>
+
