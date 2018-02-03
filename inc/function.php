@@ -733,36 +733,38 @@ function selectQuery($table_name, $col, $params){
 
 }
 
-
-
-
-
 function getApi(){
 
 	global $connection;
 
 	if(isset($_POST['submit'])){
-		$currency = $_POST['currency'];
-		$base     = $_POST['base'];
-		$address  = $_POST['address'];
+
+		$currency 		= $_POST['currency'];
+		$base_to     	= $_POST['base_to'];
+		$base_from     	= $_POST['base_from'];
+		$address  		= $_POST['address'];
 	}
 
 	if (empty($address)) {
-		$address = 'india';
+		$address = 'mumbai';
 	}
 
 	$geo_code = getGeocode($address);
 
 
-	if (empty($base)) {
-	$base = 'USD';
+	if (empty($base_to)) {
+	$base_to = 'USD';
+	}
+
+	if (empty($base_from)) {
+	$base_from = 'INR';
 	}
 
 	if (empty($currency)) {
-	$currency = 100;
+	$currency = 1;
 	}
 
-	$url = "https://api.fixer.io/latest?base=".$base;
+	$url = "https://api.fixer.io/latest?base=".$base_to;
 
 	$curl = curl_init();
 
@@ -815,13 +817,13 @@ function getApi(){
 
 	$response = json_decode($response);
 
-	$INR = $response->rates->INR;
+	$result = $response->rates->$base_from;
 
-	$result = number_format(($currency/$INR), 2);
+	$result = number_format(($currency/$result), 2);
 
 	}
 
-	return $data = array('currency' => $currency, 'result' => $result, 'base' => $base, 'geo_code' => $geo_code);
+	return $data = array('currency' => $currency, 'result' => $result, 'base_to' => $base_to, 'base_from' => $base_from, 'geo_code' => $geo_code);
 }
 
 

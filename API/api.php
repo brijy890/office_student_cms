@@ -5,17 +5,17 @@
 
 // print_r($data);
 // exit;
-
-// echo $data['geo_code']['lat'];
-// exit;
-
 ?>
 
 	<div class="container">
 		<form action="<?php $_SERVER['PHP_SELF'];?>" method="POST">
 
 		<div class="form-group">
-			<input type="text"  placeholder="Enter Base" name="base" class="form-control">
+			<input type="text"  placeholder="Convert To" name="base_to" class="form-control">
+		</div>
+
+		<div class="form-group">
+			<input type="text"  placeholder="Convert From" name="base_from" class="form-control">
 		</div>
 
 		<div class="form-group">
@@ -47,12 +47,12 @@
 					<th>Value</th>
 					<tbody>
 					<tr>
-					<td>INR</td>
+					<td><?php echo $data['base_from'];?></td>
 					<td><?php echo $data['currency'];?></td>
 					</tr>
 
 					<tr>
-					<td><?php echo $data['base'];?></td>
+					<td><?php echo $data['base_to'];?></td>
 					<td><?php echo $data['result'];?></td>
 					</tr>
 					</tbody>
@@ -63,20 +63,24 @@
 
 
  <script>
+
+ 		console.log('<?php echo $lat?>');
+
+ 		console.log('<?php echo $lag?>');
+
+
+
       function initMap() {
-      	var lat = document.getElementById('lat').value;
-      	var lag = document.getElementById('lag').value;
-      	console.log(lat);
-      	console.log(lag);
-        // var uluru = {lat: lat, lng: lag};
-        // var map = new google.maps.Map(document.getElementById('map'), {
-        //   zoom: 4,
-        //   center: uluru
-        // });
-        // var marker = new google.maps.Marker({
-        //   position: uluru,
-        //   map: map
-        // });
+        var uluru = {lat: <?php echo $data['geo_code']['lat']?>, lng: <?php echo $data['geo_code']['lag']?>};
+        console.log(uluru);
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
       }
     </script>
     <script async defer
